@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(volta --version)",
+      "PowerShell(volta --version)",
+      "Bash(git add *)"
+    ]
+  },
+  includeCoAuthoredBy: false
+}
