@@ -1,1 +1,9 @@
-{}
+{
+  "dropzone": {
+    "title": "Deine Audible CSV hier ablegen",
+    "subtitle": "oder klicken, um eine Datei auszuwählen",
+    "hint": "Nur .csv-Dateien werden akzeptiert",
+    "active": "Datei jetzt ablegen …",
+    "rejected": "Ungültiger Dateityp – bitte eine .csv-Datei wählen"
+  }
+}
