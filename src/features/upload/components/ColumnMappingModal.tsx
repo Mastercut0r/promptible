@@ -21,6 +21,7 @@ interface ColumnMappingModalProps {
   mapping: ColumnMapping
   onMappingChange: (mapping: ColumnMapping) => void
   onContinue: () => void
+  onCancel: () => void
 }
 
 export default function ColumnMappingModal({
@@ -29,6 +30,7 @@ export default function ColumnMappingModal({
   mapping,
   onMappingChange,
   onContinue,
+  onCancel,
 }: ColumnMappingModalProps) {
   const { t } = useTranslation()
 
@@ -37,7 +39,7 @@ export default function ColumnMappingModal({
   }
 
   return (
-    <Dialog open={open} maxWidth="sm" fullWidth>
+    <Dialog open={open} maxWidth="sm" fullWidth onClose={onCancel}>
       <DialogTitle>{t('mapping.title')}</DialogTitle>
       <DialogContent>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
@@ -71,6 +73,7 @@ export default function ColumnMappingModal({
         </Stack>
       </DialogContent>
       <DialogActions>
+        <Button onClick={onCancel}>{t('mapping.cancel')}</Button>
         <Button variant="contained" onClick={onContinue}>
           {t('mapping.continue')}
         </Button>

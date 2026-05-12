@@ -30,6 +30,11 @@ function App() {
     setMappingModalOpen(false)
   }
 
+  const handleCancel = () => {
+    setFile(null)
+    setMappingModalOpen(false)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -55,6 +60,7 @@ function App() {
           mapping={mapping}
           onMappingChange={setMapping}
           onContinue={handleContinue}
+          onCancel={handleCancel}
         />
       </Suspense>
     </ThemeProvider>
