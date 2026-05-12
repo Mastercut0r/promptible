@@ -1,10 +1,12 @@
 {
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(volta --version)",
       "PowerShell(volta --version)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git pull *)",
+      "Bash(git checkout *)"
     ]
-  },
-  includeCoAuthoredBy: false
+  }
 }
