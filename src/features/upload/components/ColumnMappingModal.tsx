@@ -1,0 +1,80 @@
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Stack,
+  Typography,
+  Box,
+} from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { type AppField, type ColumnMapping, APP_FIELDS } from '../types'
+
+interface ColumnMappingModalProps {
+  open: boolean
+  headers: string[]
+  mapping: ColumnMapping
+  onMappingChange: (mapping: ColumnMapping) => void
+  onContinue: () => void
+}
+
+export default function ColumnMappingModal({
+  open,
+  headers,
+  mapping,
+  onMappingChange,
+  onContinue,
+}: ColumnMappingModalProps) {
+  const { t } = useTranslation()
+
+  const handleChange = (field: AppField, value: string) => {
+    onMappingChange({ ...mapping, [field]: value })
+  }
+
+  return (
+    <Dialog open={open} maxWidth="sm" fullWidth>
+      <DialogTitle>{t('mapping.title')}</DialogTitle>
+      <DialogContent>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          {t('mapping.subtitle')}
+        </Typography>
+        <Stack spacing={2}>
+          {APP_FIELDS.map((field) => (
+            <Box key={field} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Typography sx={{ minWidth: 160, flexShrink: 0 }}>
+                {t(`mapping.field_${field}`)}
+              </Typography>
+              <FormControl fullWidth size="small">
+                <InputLabel>{t('mapping.placeholder')}</InputLabel>
+                <Select
+                  value={mapping[field] ?? ''}
+                  label={t('mapping.placeholder')}
+                  onChange={(e) => handleChange(field, e.target.value)}
+                >
+                  <MenuItem value="">
+                    <em>{t('mapping.not_mapped')}</em>
+                  </MenuItem>
+                  {headers.map((header) => (
+                    <MenuItem key={header} value={header}>
+                      {header}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          ))}
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" onClick={onContinue}>
+          {t('mapping.continue')}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
