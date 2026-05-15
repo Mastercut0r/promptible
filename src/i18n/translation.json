@@ -5,5 +5,18 @@
     "hint": "Nur .csv-Dateien werden akzeptiert",
     "active": "Datei jetzt ablegen …",
     "rejected": "Ungültiger Dateityp – bitte eine .csv-Datei wählen"
+  },
+  "mapping": {
+    "title": "Spalten zuordnen",
+    "subtitle": "Ordne die Felder deiner CSV den App-Feldern zu.",
+    "continue": "Weiter",
+    "cancel": "Abbrechen",
+    "field_asin": "ASIN",
+    "field_title": "Titel",
+    "field_authors": "Autor(en)",
+    "field_parentCategory": "Hauptkategorie",
+    "field_myRating": "Meine Bewertung",
+    "placeholder": "Spalte wählen …",
+    "not_mapped": "Nicht zugeordnet"
   }
 }

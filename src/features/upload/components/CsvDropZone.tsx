@@ -20,7 +20,11 @@ export default function CsvDropZone({ onFileDrop }: CsvDropZoneProps) {
 
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     onDrop,
-    accept: { 'text/csv': ['.csv'] },
+    accept: {
+      'text/csv': ['.csv'],
+      'application/vnd.ms-excel': ['.csv'],
+      'text/plain': ['.csv'],
+    },
     multiple: false,
   })
 
