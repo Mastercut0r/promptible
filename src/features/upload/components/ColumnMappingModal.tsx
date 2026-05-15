@@ -15,6 +15,8 @@ import {
 import { useTranslation } from 'react-i18next'
 import { type AppField, type ColumnMapping, APP_FIELDS } from '../types'
 
+const REQUIRED_MAPPING_FIELDS: AppField[] = ['title', 'authors'];
+
 interface ColumnMappingModalProps {
   open: boolean
   headers: string[]
@@ -38,6 +40,8 @@ export default function ColumnMappingModal({
     onMappingChange({ ...mapping, [field]: value })
   }
 
+  const isMappingValid = REQUIRED_MAPPING_FIELDS.every((field) => mapping[field] && mapping[field].trim() !== '');
+
   return (
     <Dialog open={open} maxWidth="sm" fullWidth onClose={onCancel}>
       <DialogTitle>{t('mapping.title')}</DialogTitle>
@@ -46,12 +50,17 @@ export default function ColumnMappingModal({
           {t('mapping.subtitle')}
         </Typography>
         <Stack spacing={2}>
-          {APP_FIELDS.map((field) => (
+          {APP_FIELDS.map((field) => {
+            const isRequired = REQUIRED_MAPPING_FIELDS.includes(field);
+            const isMissing = isRequired && !mapping[field]; 
+            return (
             <Box key={field} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Typography sx={{ minWidth: 160, flexShrink: 0 }}>
-                {t(`mapping.field_${field}`)}
+              <Typography sx={{ minWidth: 160, flexShrink: 0, color: isMissing ? 'error.main' : 'inherit' }}>
+                {t(`mapping.field_${field}`)} {isRequired ? '*' : ''}
               </Typography>
-              <FormControl fullWidth size="small">
+              <FormControl 
+                fullWidth size="small"
+                error={isMissing}>
                 <InputLabel>{t('mapping.placeholder')}</InputLabel>
                 <Select
                   value={mapping[field] ?? ''}
@@ -69,12 +78,14 @@ export default function ColumnMappingModal({
                 </Select>
               </FormControl>
             </Box>
-          ))}
+            );
+          }
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>{t('mapping.cancel')}</Button>
-        <Button variant="contained" onClick={onContinue}>
+        <Button variant="contained" disabled={!isMappingValid} onClick={onContinue}>
           {t('mapping.continue')}
         </Button>
       </DialogActions>

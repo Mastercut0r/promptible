@@ -13,7 +13,8 @@ interface UseCsvParserResult {
 export function useCsvParser(file: File | null): UseCsvParserResult {
   const [headers, setHeaders] = useState<string[]>([])
   const [rows, setRows] = useState<Record<string, string>[]>([])
-  const [mapping, setMapping] = useState<ColumnMapping>({} as ColumnMapping)
+  const emptyMapping = (): ColumnMapping => Object.fromEntries(APP_FIELDS.map((field) => [field, ''])) as ColumnMapping 
+  const [mapping, setMapping] = useState<ColumnMapping>(emptyMapping)
 
   useEffect(() => {
     if (!file) return
