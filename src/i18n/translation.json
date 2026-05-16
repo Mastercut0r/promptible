@@ -17,6 +17,7 @@
     "field_parentCategory": "Hauptkategorie",
     "field_myRating": "Meine Bewertung",
     "placeholder": "Spalte wählen …",
-    "not_mapped": "Nicht zugeordnet"
+    "not_mapped": "Nicht zugeordnet",
+    "auto_convert": "Audible-Sternebewertungen automatisch konvertieren"
   }
 }

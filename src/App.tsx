@@ -5,14 +5,15 @@ import './i18n'
 import CsvDropZone from './features/upload/components/CsvDropZone'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
-import type { ParsedBook } from './features/upload/types'
+import { useLibraryStore } from './store/useLibraryStore'
 
 function App() {
   const [file, setFile] = useState<File | null>(null)
   const [mappingModalOpen, setMappingModalOpen] = useState(false)
-  const [books, setBooks] = useState<ParsedBook[] | null>(null)
+  const [autoConvert, setAutoConvert] = useState(false)
 
   const { headers, mapping, setMapping, parseBooks, isReady } = useCsvParser(file)
+  const { books, importBooks } = useLibraryStore()
 
   useEffect(() => {
     if (isReady) {
@@ -21,13 +22,13 @@ function App() {
   }, [isReady])
 
   const handleFileDrop = (droppedFile: File) => {
-    setBooks(null)
     setFile(droppedFile)
   }
 
   const handleContinue = () => {
-    setBooks(parseBooks())
+    importBooks(parseBooks(), autoConvert)
     setMappingModalOpen(false)
+    setFile(null)
   }
 
   const handleCancel = () => {
@@ -47,7 +48,7 @@ function App() {
       >
         <Box sx={{ maxWidth: 600, mx: 'auto', mt: 8, px: 2 }}>
           <CsvDropZone onFileDrop={handleFileDrop} />
-          {books && (
+          {books.length > 0 && (
             <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
               {books.length} Bücher geladen ✓
             </Typography>
@@ -59,6 +60,8 @@ function App() {
           headers={headers}
           mapping={mapping}
           onMappingChange={setMapping}
+          autoConvert={autoConvert}
+          onAutoConvertChange={setAutoConvert}
           onContinue={handleContinue}
           onCancel={handleCancel}
         />
