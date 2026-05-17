@@ -1,7 +1,9 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { useShallow } from 'zustand/shallow'
 import type { Book, AppRating } from '../shared/types'
 import type { ParsedBook } from '../features/upload/types'
+import { normalizeGenre } from '../shared/utils/genreUtils'
 
 const AUDIBLE_RATING_MAP: Record<number, AppRating> = {
   1: 'DISLIKED',
@@ -64,3 +66,12 @@ export const useLibraryStore = create<LibraryState>()(
     { name: 'promptible-library' }
   )
 )
+
+export function useUniqueGenres(): string[] {
+  return useLibraryStore(
+    useShallow((state) => {
+      const genres = state.books.map((b) => normalizeGenre(b.genre))
+      return [...new Set(genres)].sort((a, b) => a.localeCompare(b))
+    })
+  )
+}
