@@ -4,13 +4,16 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   InputLabel,
   Select,
   MenuItem,
   Stack,
   Typography,
   Box,
+  Divider,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { type AppField, type ColumnMapping, APP_FIELDS } from '../types'
@@ -22,6 +25,8 @@ interface ColumnMappingModalProps {
   headers: string[]
   mapping: ColumnMapping
   onMappingChange: (mapping: ColumnMapping) => void
+  autoConvert: boolean
+  onAutoConvertChange: (value: boolean) => void
   onContinue: () => void
   onCancel: () => void
 }
@@ -31,6 +36,8 @@ export default function ColumnMappingModal({
   headers,
   mapping,
   onMappingChange,
+  autoConvert,
+  onAutoConvertChange,
   onContinue,
   onCancel,
 }: ColumnMappingModalProps) {
@@ -82,6 +89,16 @@ export default function ColumnMappingModal({
           }
           )}
         </Stack>
+        <Divider sx={{ my: 2 }} />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={autoConvert}
+              onChange={(e) => onAutoConvertChange(e.target.checked)}
+            />
+          }
+          label={t('mapping.auto_convert')}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>{t('mapping.cancel')}</Button>
