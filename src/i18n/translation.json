@@ -6,6 +6,9 @@
     "active": "Datei jetzt ablegen …",
     "rejected": "Ungültiger Dateityp – bitte eine .csv-Datei wählen"
   },
+  "genre": {
+    "uncategorized": "Nicht zugeordnet"
+  },
   "mapping": {
     "title": "Spalten zuordnen",
     "subtitle": "Ordne die Felder deiner CSV den App-Feldern zu.",
