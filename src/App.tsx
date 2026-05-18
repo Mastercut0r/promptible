@@ -1,9 +1,10 @@
 import { Suspense, useState, useEffect } from 'react'
-import { ThemeProvider, CssBaseline, CircularProgress, Box, Typography } from '@mui/material'
+import { ThemeProvider, CssBaseline, CircularProgress, Box } from '@mui/material'
 import theme from './shared/theme'
 import './i18n'
 import CsvDropZone from './features/upload/components/CsvDropZone'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
+import LibraryGrid from './features/library/components/LibraryGrid'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
 import { useLibraryStore } from './store/useLibraryStore'
 
@@ -46,13 +47,11 @@ function App() {
           </Box>
         }
       >
-        <Box sx={{ maxWidth: 600, mx: 'auto', mt: 8, px: 2 }}>
-          <CsvDropZone onFileDrop={handleFileDrop} />
-          {books.length > 0 && (
-            <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
-              {books.length} Bücher geladen ✓
-            </Typography>
-          )}
+        <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4 }}>
+          <Box sx={{ maxWidth: '37.5rem', mx: 'auto', mb: 4 }}>
+            <CsvDropZone onFileDrop={handleFileDrop} />
+          </Box>
+          {books.length > 0 && <LibraryGrid />}
         </Box>
 
         <ColumnMappingModal

@@ -1,26 +1,40 @@
 {
+  "AppRating": {
+    "DISLIKED": "Nicht gefallen",
+    "LOVED": "Geliebt",
+    "NEUTRAL": "Neutral",
+    "UNRATED": "Nicht bewertet"
+  },
   "dropzone": {
-    "title": "Deine Audible CSV hier ablegen",
-    "subtitle": "oder klicken, um eine Datei auszuwählen",
-    "hint": "Nur .csv-Dateien werden akzeptiert",
     "active": "Datei jetzt ablegen …",
-    "rejected": "Ungültiger Dateityp – bitte eine .csv-Datei wählen"
+    "hint": "Nur .csv-Dateien werden akzeptiert",
+    "rejected": "Ungültiger Dateityp – bitte eine .csv-Datei wählen",
+    "subtitle": "oder klicken, um eine Datei auszuwählen",
+    "title": "Deine Audible CSV hier ablegen"
   },
   "genre": {
     "uncategorized": "Nicht zugeordnet"
   },
+  "LibraryGrid": {
+    "column": {
+      "author": "Autor",
+      "genre": "Genre",
+      "rating": "Bewertung",
+      "title": "Titel"
+    }
+  },
   "mapping": {
-    "title": "Spalten zuordnen",
-    "subtitle": "Ordne die Felder deiner CSV den App-Feldern zu.",
-    "continue": "Weiter",
+    "auto_convert": "Audible-Sternebewertungen automatisch konvertieren",
     "cancel": "Abbrechen",
+    "continue": "Weiter",
     "field_asin": "ASIN",
-    "field_title": "Titel",
     "field_authors": "Autor(en)",
-    "field_parentCategory": "Hauptkategorie",
     "field_myRating": "Meine Bewertung",
-    "placeholder": "Spalte wählen …",
+    "field_parentCategory": "Hauptkategorie",
+    "field_title": "Titel",
     "not_mapped": "Nicht zugeordnet",
-    "auto_convert": "Audible-Sternebewertungen automatisch konvertieren"
+    "placeholder": "Spalte wählen …",
+    "subtitle": "Ordne die Felder deiner CSV den App-Feldern zu.",
+    "title": "Spalten zuordnen"
   }
 }
