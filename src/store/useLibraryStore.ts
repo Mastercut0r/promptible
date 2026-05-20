@@ -50,7 +50,7 @@ export const useLibraryStore = create<LibraryState>()(
               }
             } else {
               merged.push({
-                id: parsed.asin,
+                id: parsed.asin || crypto.randomUUID(),
                 title: parsed.title,
                 author: parsed.authors,
                 genre: parsed.parentCategory,
