@@ -4,12 +4,14 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 import { useCompiledPrompt } from '../hooks/useCompiledPrompt'
-import { usePromptSettingsStore } from '../../../store/usePromptSettingsStore'
 
-export default function PromptOutputPanel() {
+interface PromptOutputPanelProps {
+  onClose: () => void
+}
+
+export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
   const { t } = useTranslation()
   const { prompt, bookCount } = useCompiledPrompt()
-  const setShowOutput = usePromptSettingsStore((state) => state.setShowOutput)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [copyError, setCopyError] = useState(false)
 
@@ -38,7 +40,7 @@ export default function PromptOutputPanel() {
         <Typography variant="h6">
           {t('promptOutput.title')}
         </Typography>
-        <IconButton size="small" onClick={() => setShowOutput(false)}>
+        <IconButton size="small" onClick={onClose}>
           <CloseIcon />
         </IconButton>
       </Stack>

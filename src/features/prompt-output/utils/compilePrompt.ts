@@ -1,8 +1,8 @@
-import type { Book, AppRating } from '../../../shared/types'
+import type { RatedBook, RatedAppRating } from '../../../shared/types'
 import type { PromptLanguage } from '../../../store/usePromptSettingsStore'
 
 interface RatingSection {
-  rating: Exclude<AppRating, 'UNRATED'>
+  rating: RatedAppRating
   heading: { EN: string; DE: string }
 }
 
@@ -42,14 +42,13 @@ const OUTRO = {
 
 const BY = { EN: 'by', DE: 'von' }
 
-function formatBookList(books: Book[], lang: PromptLanguage): string {
+function formatBookList(books: RatedBook[], lang: PromptLanguage): string {
   return books.map((b) => `- ${b.title} ${BY[lang]} ${b.author}`).join('\n')
 }
 
-export function compilePrompt(books: Book[], language: PromptLanguage): string {
-  const grouped = new Map<string, Book[]>()
+export function compilePrompt(books: RatedBook[], language: PromptLanguage): string {
+  const grouped = new Map<RatedAppRating, RatedBook[]>()
   for (const book of books) {
-    if (book.rating === 'UNRATED') continue
     const list = grouped.get(book.rating) ?? []
     list.push(book)
     grouped.set(book.rating, list)

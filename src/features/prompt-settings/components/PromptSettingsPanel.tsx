@@ -18,10 +18,14 @@ import { useUniqueGenres } from '../../../store/useLibraryStore'
 
 const SELECT_ALL_VALUE = '__select_all__'
 
-export default function PromptSettingsPanel() {
+interface PromptSettingsPanelProps {
+  onGenerate: () => void
+}
+
+export default function PromptSettingsPanel({ onGenerate }: PromptSettingsPanelProps) {
   const { t } = useTranslation()
   const allGenres = useUniqueGenres()
-  const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres, setShowOutput, pruneGenres } =
+  const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres, pruneGenres } =
     usePromptSettingsStore()
 
   useEffect(() => {
@@ -101,7 +105,7 @@ export default function PromptSettingsPanel() {
         </FormControl>
         <Button
           variant="contained"
-          onClick={() => setShowOutput(true)}
+          onClick={onGenerate}
           sx={{ alignSelf: { xs: 'flex-start', sm: 'center' } }}
         >
           {t('promptSettings.generateButton')}
