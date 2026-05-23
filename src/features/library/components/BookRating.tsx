@@ -1,4 +1,4 @@
-import { type MouseEvent } from 'react'
+import { memo, type MouseEvent } from 'react'
 import { IconButton, Tooltip } from '@mui/material'
 import ThumbDown from '@mui/icons-material/ThumbDown'
 import ThumbDownOutlined from '@mui/icons-material/ThumbDownOutlined'
@@ -40,7 +40,7 @@ const RATING_OPTIONS = [
   },
 ]
 
-export default function BookRating({ bookId, currentRating }: BookRatingProps) {
+const BookRating = memo(function BookRating({ bookId, currentRating }: BookRatingProps) {
   const { t } = useTranslation()
   const setRating = useLibraryStore((state) => state.setRating)
 
@@ -70,4 +70,6 @@ export default function BookRating({ bookId, currentRating }: BookRatingProps) {
       })}
     </div>
   )
-}
+})
+
+export default BookRating
