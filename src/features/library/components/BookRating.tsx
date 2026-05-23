@@ -22,21 +22,21 @@ const RATING_OPTIONS = [
     FilledIcon: ThumbDown,
     OutlinedIcon: ThumbDownOutlined,
     color: 'error' as const,
-    tooltipKey: 'BookRating.tooltip.disliked',
+    tooltipKey: 'AppRating.DISLIKED',
   },
   {
     value: 'NEUTRAL' as const,
     FilledIcon: SentimentNeutral,
     OutlinedIcon: SentimentNeutralOutlined,
     color: 'warning' as const,
-    tooltipKey: 'BookRating.tooltip.neutral',
+    tooltipKey: 'AppRating.NEUTRAL',
   },
   {
     value: 'LOVED' as const,
     FilledIcon: Favorite,
     OutlinedIcon: FavoriteOutlined,
     color: 'success' as const,
-    tooltipKey: 'BookRating.tooltip.loved',
+    tooltipKey: 'AppRating.LOVED',
   },
 ]
 

@@ -5,11 +5,6 @@
     "NEUTRAL": "Neutral",
     "UNRATED": "Nicht bewertet"
   },
-  "BookRating": {
-    "tooltip.disliked": "Nicht gefallen",
-    "tooltip.loved": "Geliebt",
-    "tooltip.neutral": "Neutral"
-  },
   "dropzone": {
     "active": "Datei jetzt ablegen …",
     "hint": "Nur .csv-Dateien werden akzeptiert",
