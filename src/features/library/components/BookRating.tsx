@@ -1,4 +1,4 @@
-import { memo, type MouseEvent } from 'react'
+import { memo, useMemo, type MouseEvent } from 'react'
 import { IconButton, Tooltip } from '@mui/material'
 import ThumbDown from '@mui/icons-material/ThumbDown'
 import ThumbDownOutlined from '@mui/icons-material/ThumbDownOutlined'
@@ -44,10 +44,19 @@ const BookRating = memo(function BookRating({ bookId, currentRating }: BookRatin
   const { t } = useTranslation()
   const setRating = useLibraryStore((state) => state.setRating)
 
-  const handleClick = (e: MouseEvent, value: AppRating) => {
-    e.stopPropagation()
-    setRating(bookId, currentRating === value ? 'UNRATED' : value)
-  }
+  const handlers = useMemo(
+    () =>
+      new Map(
+        RATING_OPTIONS.map((opt) => [
+          opt.value,
+          (e: MouseEvent) => {
+            e.stopPropagation()
+            setRating(bookId, currentRating === opt.value ? 'UNRATED' : opt.value)
+          },
+        ]),
+      ),
+    [bookId, currentRating, setRating],
+  )
 
   return (
     <div className={styles.container}>
@@ -61,7 +70,7 @@ const BookRating = memo(function BookRating({ bookId, currentRating }: BookRatin
               size="small"
               color={isActive ? option.color : 'default'}
               aria-label={t(option.tooltipKey)}
-              onClick={(e) => handleClick(e, option.value)}
+              onClick={handlers.get(option.value)}
             >
               <Icon fontSize="small" />
             </IconButton>
