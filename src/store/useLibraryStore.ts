@@ -16,6 +16,7 @@ const AUDIBLE_RATING_MAP: Record<number, AppRating> = {
 interface LibraryState {
   books: Book[]
   importBooks: (newBooks: ParsedBook[], autoConvert: boolean) => void
+  setRating: (bookId: string, rating: AppRating) => void
 }
 
 export const useLibraryStore = create<LibraryState>()(
@@ -60,6 +61,19 @@ export const useLibraryStore = create<LibraryState>()(
           }
 
           return { books: merged }
+        })
+      },
+      setRating: (bookId, rating) => {
+        set((state) => {
+          const updatedBooks: Book[] = []
+          for (const book of state.books) {
+            if (book.id === bookId) {
+              updatedBooks.push({ ...book, rating })
+            } else {
+              updatedBooks.push(book)
+            }
+          }
+          return { books: updatedBooks }
         })
       },
     }),
