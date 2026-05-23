@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import {
   Box,
   Checkbox,
@@ -12,8 +12,7 @@ import {
 } from '@mui/material'
 import type { SelectChangeEvent } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { usePromptSettingsStore } from '../../../store/usePromptSettingsStore'
-import type { PromptLanguage } from '../../../store/usePromptSettingsStore'
+import { usePromptSettingsStore, type PromptLanguage } from '../../../store/usePromptSettingsStore'
 import { useUniqueGenres } from '../../../store/useLibraryStore'
 
 const SELECT_ALL_VALUE = '__select_all__'
@@ -33,6 +32,8 @@ export default function PromptSettingsPanel() {
     return selectedGenres.filter((g) => allGenres.includes(g))
   }, [selectedGenres, allGenres])
 
+  const activeGenresSet = useMemo(() => new Set(activeGenres), [activeGenres])
+
   const allSelected = selectedGenres === null || activeGenres.length === allGenres.length
 
   const handleLanguageChange = (e: SelectChangeEvent) => {
@@ -50,11 +51,11 @@ export default function PromptSettingsPanel() {
     setSelectedGenres(value.length === allGenres.length ? null : value)
   }
 
-  const renderGenreValue = () => {
+  const renderGenreValue = useCallback(() => {
     if (allSelected) return t('promptSettings.allSelected')
     if (activeGenres.length === 0) return '—'
     return t('promptSettings.genresSelected', { count: activeGenres.length })
-  }
+  }, [allSelected, activeGenres.length, t])
 
   return (
     <Box>
@@ -91,7 +92,7 @@ export default function PromptSettingsPanel() {
             </MenuItem>
             {allGenres.map((genre) => (
               <MenuItem key={genre} value={genre}>
-                <Checkbox checked={activeGenres.includes(genre)} />
+                <Checkbox checked={activeGenresSet.has(genre)} />
                 <ListItemText primary={genre} />
               </MenuItem>
             ))}
