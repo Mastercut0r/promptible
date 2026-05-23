@@ -5,6 +5,7 @@ import './i18n'
 import CsvDropZone from './features/upload/components/CsvDropZone'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
 import LibraryGrid from './features/library/components/LibraryGrid'
+import PromptSettingsPanel from './features/prompt-settings/components/PromptSettingsPanel'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
 import { useLibraryStore } from './store/useLibraryStore'
 
@@ -51,7 +52,14 @@ function App() {
           <Box sx={{ maxWidth: '37.5rem', mx: 'auto', mb: 4 }}>
             <CsvDropZone onFileDrop={handleFileDrop} />
           </Box>
-          {books.length > 0 && <LibraryGrid />}
+          {books.length > 0 && (
+            <>
+              <LibraryGrid />
+              <Box sx={{ mt: 4 }}>
+                <PromptSettingsPanel />
+              </Box>
+            </>
+          )}
         </Box>
 
         <ColumnMappingModal
