@@ -22,7 +22,10 @@ export const usePromptSettingsStore = create<PromptSettingsState>()(
         set((state) => {
           if (state.selectedGenres === null) return state
           const pruned = state.selectedGenres.filter((g) => validGenres.includes(g))
-          return { selectedGenres: pruned.length === validGenres.length ? null : pruned }
+          if (pruned.length === 0 || pruned.length === validGenres.length) {
+            return { selectedGenres: null }
+          }
+          return { selectedGenres: pruned }
         }),
     }),
     {
