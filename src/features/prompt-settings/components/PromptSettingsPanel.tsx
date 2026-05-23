@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react'
 import {
   Box,
+  Button,
   Checkbox,
   FormControl,
   InputLabel,
@@ -20,7 +21,7 @@ const SELECT_ALL_VALUE = '__select_all__'
 export default function PromptSettingsPanel() {
   const { t } = useTranslation()
   const allGenres = useUniqueGenres()
-  const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres, pruneGenres } =
+  const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres, setShowOutput, pruneGenres } =
     usePromptSettingsStore()
 
   useEffect(() => {
@@ -98,6 +99,13 @@ export default function PromptSettingsPanel() {
             ))}
           </Select>
         </FormControl>
+        <Button
+          variant="contained"
+          onClick={() => setShowOutput(true)}
+          sx={{ alignSelf: { xs: 'flex-start', sm: 'center' } }}
+        >
+          {t('promptSettings.generateButton')}
+        </Button>
       </Stack>
     </Box>
   )

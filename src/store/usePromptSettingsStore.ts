@@ -6,8 +6,10 @@ export type PromptLanguage = 'EN' | 'DE'
 interface PromptSettingsState {
   promptLanguage: PromptLanguage
   selectedGenres: string[] | null
+  showOutput: boolean
   setPromptLanguage: (lang: PromptLanguage) => void
   setSelectedGenres: (genres: string[] | null) => void
+  setShowOutput: (show: boolean) => void
   pruneGenres: (validGenres: string[]) => void
 }
 
@@ -16,8 +18,10 @@ export const usePromptSettingsStore = create<PromptSettingsState>()(
     (set) => ({
       promptLanguage: 'DE',
       selectedGenres: null,
+      showOutput: false,
       setPromptLanguage: (lang) => set({ promptLanguage: lang }),
       setSelectedGenres: (genres) => set({ selectedGenres: genres }),
+      setShowOutput: (show) => set({ showOutput: show }),
       pruneGenres: (validGenres) =>
         set((state) => {
           if (state.selectedGenres === null) return state
@@ -32,6 +36,10 @@ export const usePromptSettingsStore = create<PromptSettingsState>()(
       name: 'promptible-prompt-settings',
       version: 1,
       migrate: (persistedState) => persistedState as PromptSettingsState,
+      partialize: (state) => ({
+        promptLanguage: state.promptLanguage,
+        selectedGenres: state.selectedGenres,
+      }),
     }
   )
 )

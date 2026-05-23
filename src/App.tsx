@@ -6,8 +6,10 @@ import CsvDropZone from './features/upload/components/CsvDropZone'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
 import LibraryGrid from './features/library/components/LibraryGrid'
 import PromptSettingsPanel from './features/prompt-settings/components/PromptSettingsPanel'
+import PromptOutputPanel from './features/prompt-output/components/PromptOutputPanel'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
 import { useLibraryStore } from './store/useLibraryStore'
+import { usePromptSettingsStore } from './store/usePromptSettingsStore'
 
 function App() {
   const [file, setFile] = useState<File | null>(null)
@@ -16,6 +18,7 @@ function App() {
 
   const { headers, mapping, setMapping, parseBooks, isReady } = useCsvParser(file)
   const { books, importBooks } = useLibraryStore()
+  const showOutput = usePromptSettingsStore((state) => state.showOutput)
 
   useEffect(() => {
     if (isReady) {
@@ -58,6 +61,11 @@ function App() {
               <Box sx={{ mt: 4 }}>
                 <PromptSettingsPanel />
               </Box>
+              {showOutput && (
+                <Box sx={{ mt: 4 }}>
+                  <PromptOutputPanel />
+                </Box>
+              )}
             </>
           )}
         </Box>
