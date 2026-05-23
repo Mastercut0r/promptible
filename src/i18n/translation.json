@@ -23,6 +23,17 @@
       "title": "Titel"
     }
   },
+  "promptSettings": {
+    "title": "Prompt-Einstellungen",
+    "outputLanguage": "Prompt-Ausgabesprache",
+    "languageEN": "Englisch",
+    "languageDE": "Deutsch",
+    "genreFilter": "Genre-Filter",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen",
+    "allSelected": "Alle",
+    "genresSelected": "{{count}} ausgewählt"
+  },
   "mapping": {
     "auto_convert": "Audible-Sternebewertungen automatisch konvertieren",
     "cancel": "Abbrechen",
