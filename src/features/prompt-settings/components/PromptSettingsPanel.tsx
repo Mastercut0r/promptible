@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import {
   Box,
   Checkbox,
@@ -21,8 +21,12 @@ const SELECT_ALL_VALUE = '__select_all__'
 export default function PromptSettingsPanel() {
   const { t } = useTranslation()
   const allGenres = useUniqueGenres()
-  const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres } =
+  const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres, pruneGenres } =
     usePromptSettingsStore()
+
+  useEffect(() => {
+    pruneGenres(allGenres)
+  }, [allGenres, pruneGenres])
 
   const activeGenres = useMemo(() => {
     if (selectedGenres === null) return allGenres

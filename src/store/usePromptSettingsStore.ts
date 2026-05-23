@@ -8,6 +8,7 @@ interface PromptSettingsState {
   selectedGenres: string[] | null
   setPromptLanguage: (lang: PromptLanguage) => void
   setSelectedGenres: (genres: string[] | null) => void
+  pruneGenres: (validGenres: string[]) => void
 }
 
 export const usePromptSettingsStore = create<PromptSettingsState>()(
@@ -17,7 +18,17 @@ export const usePromptSettingsStore = create<PromptSettingsState>()(
       selectedGenres: null,
       setPromptLanguage: (lang) => set({ promptLanguage: lang }),
       setSelectedGenres: (genres) => set({ selectedGenres: genres }),
+      pruneGenres: (validGenres) =>
+        set((state) => {
+          if (state.selectedGenres === null) return state
+          const pruned = state.selectedGenres.filter((g) => validGenres.includes(g))
+          return { selectedGenres: pruned.length === validGenres.length ? null : pruned }
+        }),
     }),
-    { name: 'promptible-prompt-settings' }
+    {
+      name: 'promptible-prompt-settings',
+      version: 1,
+      migrate: (persistedState) => persistedState as PromptSettingsState,
+    }
   )
 )
