@@ -64,17 +64,11 @@ export const useLibraryStore = create<LibraryState>()(
         })
       },
       setRating: (bookId, rating) => {
-        set((state) => {
-          const updatedBooks: Book[] = []
-          for (const book of state.books) {
-            if (book.id === bookId) {
-              updatedBooks.push({ ...book, rating })
-            } else {
-              updatedBooks.push(book)
-            }
-          }
-          return { books: updatedBooks }
-        })
+        set((state) => ({
+          books: state.books.map((book) =>
+            book.id === bookId ? { ...book, rating } : book
+          ),
+        }))
       },
     }),
     { name: 'promptible-library' }
