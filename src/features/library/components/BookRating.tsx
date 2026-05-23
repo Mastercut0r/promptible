@@ -60,6 +60,7 @@ export default function BookRating({ bookId, currentRating }: BookRatingProps) {
             <IconButton
               size="small"
               color={isActive ? option.color : 'default'}
+              aria-label={t(option.tooltipKey)}
               onClick={(e) => handleClick(e, option.value)}
             >
               <Icon fontSize="small" />
