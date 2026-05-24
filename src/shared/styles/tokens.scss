@@ -1,0 +1,9 @@
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-script: 'Caveat', cursive;
+  --font-body: 'Crimson Pro', 'Times New Roman', serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
