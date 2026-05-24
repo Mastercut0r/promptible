@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react'
 import {
   Box,
+  Button,
   Checkbox,
   FormControl,
   InputLabel,
@@ -17,7 +18,11 @@ import { useUniqueGenres } from '../../../store/useLibraryStore'
 
 const SELECT_ALL_VALUE = '__select_all__'
 
-export default function PromptSettingsPanel() {
+interface PromptSettingsPanelProps {
+  onGenerate: () => void
+}
+
+export default function PromptSettingsPanel({ onGenerate }: PromptSettingsPanelProps) {
   const { t } = useTranslation()
   const allGenres = useUniqueGenres()
   const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres, pruneGenres } =
@@ -98,6 +103,13 @@ export default function PromptSettingsPanel() {
             ))}
           </Select>
         </FormControl>
+        <Button
+          variant="contained"
+          onClick={onGenerate}
+          sx={{ alignSelf: { xs: 'flex-start', sm: 'center' } }}
+        >
+          {t('promptSettings.generateButton')}
+        </Button>
       </Stack>
     </Box>
   )

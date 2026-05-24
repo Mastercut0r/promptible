@@ -32,7 +32,16 @@
     "selectAll": "Alle auswählen",
     "deselectAll": "Alle abwählen",
     "allSelected": "Alle",
-    "genresSelected": "{{count}} ausgewählt"
+    "genresSelected": "{{count}} ausgewählt",
+    "generateButton": "Prompt generieren"
+  },
+  "promptOutput": {
+    "title": "Generierter Prompt",
+    "subtitle": "Basierend auf {{count}} bewerteten Büchern",
+    "copyButton": "In Zwischenablage kopieren",
+    "copySuccess": "Prompt wurde in die Zwischenablage kopiert!",
+    "copyError": "Kopieren fehlgeschlagen – bitte manuell kopieren.",
+    "noBooks": "Keine bewerteten Bücher entsprechen deinen Filtern. Bewerte einige Bücher und versuche es erneut."
   },
   "mapping": {
     "auto_convert": "Audible-Sternebewertungen automatisch konvertieren",

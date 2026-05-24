@@ -6,6 +6,7 @@ import CsvDropZone from './features/upload/components/CsvDropZone'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
 import LibraryGrid from './features/library/components/LibraryGrid'
 import PromptSettingsPanel from './features/prompt-settings/components/PromptSettingsPanel'
+import PromptOutputPanel from './features/prompt-output/components/PromptOutputPanel'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
 import { useLibraryStore } from './store/useLibraryStore'
 
@@ -13,6 +14,7 @@ function App() {
   const [file, setFile] = useState<File | null>(null)
   const [mappingModalOpen, setMappingModalOpen] = useState(false)
   const [autoConvert, setAutoConvert] = useState(false)
+  const [showOutput, setShowOutput] = useState(false)
 
   const { headers, mapping, setMapping, parseBooks, isReady } = useCsvParser(file)
   const { books, importBooks } = useLibraryStore()
@@ -56,8 +58,13 @@ function App() {
             <>
               <LibraryGrid />
               <Box sx={{ mt: 4 }}>
-                <PromptSettingsPanel />
+                <PromptSettingsPanel onGenerate={() => setShowOutput(true)} />
               </Box>
+              {showOutput && (
+                <Box sx={{ mt: 4 }}>
+                  <PromptOutputPanel onClose={() => setShowOutput(false)} />
+                </Box>
+              )}
             </>
           )}
         </Box>
