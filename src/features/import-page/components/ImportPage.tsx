@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { CornerFlourish, InkBlot, ParchmentSurface } from '../../../shared/components'
@@ -8,26 +8,48 @@ import BookCover from './BookCover'
 import BookDropZone from './BookDropZone'
 import styles from './ImportPage.module.scss'
 
+const COVER_FLIP_MS = 900
+const COVER_UNMOUNT_DELAY_MS = COVER_FLIP_MS + 50
+const SUCCESS_ANIMATION_MS = 1200
+
 interface ImportPageProps {
   onFileDrop: (file: File) => void
   hasExistingBooks: boolean
-  fileLoaded: boolean
+  resetKey: number
 }
 
 const GENRE_ICONS = ['⚔', '🔭', '🔍', '♠', '🧭'] as const
 
-export default function ImportPage({ onFileDrop, hasExistingBooks, fileLoaded }: ImportPageProps) {
+export default function ImportPage({ onFileDrop, hasExistingBooks, resetKey }: ImportPageProps) {
   const { t } = useTranslation()
   const { tokens } = useTheme()
   const [bookOpen, setBookOpen] = useState(false)
   const [coverGone, setCoverGone] = useState(false)
+  const [fileLoaded, setFileLoaded] = useState(false)
+  const successTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const resetState = useCallback(() => {
+    if (successTimer.current) clearTimeout(successTimer.current)
+    setFileLoaded(false)
+    setBookOpen(false)
+    setCoverGone(false)
+  }, [])
 
   useEffect(() => {
     if (bookOpen) {
-      const timer = setTimeout(() => setCoverGone(true), 950)
+      const timer = setTimeout(() => setCoverGone(true), COVER_UNMOUNT_DELAY_MS)
       return () => clearTimeout(timer)
     }
   }, [bookOpen])
+
+  useEffect(() => {
+    resetState()
+  }, [resetKey, resetState])
+
+  const handleFileDrop = useCallback((file: File) => {
+    setFileLoaded(true)
+    successTimer.current = setTimeout(() => onFileDrop(file), SUCCESS_ANIMATION_MS)
+  }, [onFileDrop])
 
   const coverColor = tokens.coverColor as HexColor
 
@@ -65,7 +87,7 @@ export default function ImportPage({ onFileDrop, hasExistingBooks, fileLoaded }:
             <CornerFlourish corner="bottom-left" size={40} color={tokens.coverAccent} />
             <CornerFlourish corner="bottom-right" size={40} color={tokens.coverAccent} />
 
-            <BookDropZone onFileDrop={onFileDrop} fileLoaded={fileLoaded} />
+            <BookDropZone onFileDrop={handleFileDrop} fileLoaded={fileLoaded} />
 
             <p className={styles.handwrittenNote}>
               {hasExistingBooks ? t('importPage.resyncNote') : t('importPage.csvNote')}

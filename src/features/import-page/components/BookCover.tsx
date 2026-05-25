@@ -21,6 +21,10 @@ export default function BookCover({ isOpen, onOpen }: BookCoverProps) {
 
   return (
     <div
+      role="button"
+      aria-label={t('importPage.openHint')}
+      tabIndex={isOpen ? -1 : 0}
+      onKeyDown={(e) => e.key === 'Enter' && !isOpen && onOpen()}
       className={clsx(styles.cover, isOpen && styles.open)}
       style={{
         background: `

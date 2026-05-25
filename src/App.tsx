@@ -17,7 +17,7 @@ const VIEW_ORDER: View[] = ['import', 'library', 'prompt']
 
 function App() {
   const [file, setFile] = useState<File | null>(null)
-  const [fileLoaded, setFileLoaded] = useState(false)
+  const [importResetKey, setImportResetKey] = useState(0)
   const [mappingModalOpen, setMappingModalOpen] = useState(false)
   const [autoConvert, setAutoConvert] = useState(false)
   const [currentView, setCurrentView] = useState<View>('import')
@@ -38,22 +38,20 @@ function App() {
   }, [isReady])
 
   const handleFileDrop = (droppedFile: File) => {
-    setFileLoaded(true)
-    setTimeout(() => setFile(droppedFile), 1200)
+    setFile(droppedFile)
   }
 
   const handleContinue = () => {
     importBooks(parseBooks(), autoConvert)
     setMappingModalOpen(false)
     setFile(null)
-    setFileLoaded(false)
     navigateTo('library')
   }
 
   const handleCancel = () => {
     setFile(null)
-    setFileLoaded(false)
     setMappingModalOpen(false)
+    setImportResetKey((k) => k + 1)
   }
 
   return (
@@ -77,7 +75,7 @@ function App() {
             <ImportPage
               onFileDrop={handleFileDrop}
               hasExistingBooks={books.length > 0}
-              fileLoaded={fileLoaded}
+              resetKey={importResetKey}
             />
           )}
 

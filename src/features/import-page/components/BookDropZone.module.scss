@@ -1,7 +1,7 @@
 .dropZone {
   width: 80%;
   padding: 36px 24px;
-  border: 2px dashed rgba(120, 100, 70, 0.3);
+  border: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent);
   border-radius: 12px;
   background: transparent;
   transition: all 0.3s;
@@ -10,7 +10,7 @@
 
   &.dragOver {
     border-color: var(--cover-accent);
-    background: rgba(180, 150, 100, 0.1);
+    background: color-mix(in srgb, var(--cover-accent) 10%, transparent);
   }
 }
 
@@ -18,13 +18,13 @@
   width: 56px;
   height: 56px;
   margin: 0 auto 12px;
-  border: 2px solid rgba(120, 100, 70, 0.3);
+  border: 2px solid color-mix(in srgb, var(--ink) 30%, transparent);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  color: rgba(120, 100, 70, 0.5);
+  color: color-mix(in srgb, var(--ink) 50%, transparent);
 }
 
 .dropTitle {
@@ -38,7 +38,7 @@
 .dropSubtitle {
   font-family: var(--font-body);
   font-size: 15px;
-  color: rgba(30, 24, 20, 0.55);
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
 }
 
 .successIcon {
@@ -56,6 +56,6 @@
 .successHint {
   font-family: var(--font-script);
   font-size: 16px;
-  color: rgba(30, 24, 20, 0.6);
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
   margin-top: 4px;
 }
