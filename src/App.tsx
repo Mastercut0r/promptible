@@ -1,6 +1,6 @@
 import { Suspense, useState, useEffect } from 'react'
 import { ThemeProvider, CssBaseline, CircularProgress, Box } from '@mui/material'
-import theme from './shared/mui-theme'
+import muiTheme from './shared/mui-theme'
 import './i18n'
 import CsvDropZone from './features/upload/components/CsvDropZone'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
@@ -9,12 +9,14 @@ import PromptSettingsPanel from './features/prompt-settings/components/PromptSet
 import PromptOutputPanel from './features/prompt-output/components/PromptOutputPanel'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
 import { useLibraryStore } from './store/useLibraryStore'
+import BookmarkNav, { type View } from './shared/components/BookmarkNav'
+import PageTransition from './shared/components/PageTransition'
 
 function App() {
   const [file, setFile] = useState<File | null>(null)
   const [mappingModalOpen, setMappingModalOpen] = useState(false)
   const [autoConvert, setAutoConvert] = useState(false)
-  const [showOutput, setShowOutput] = useState(false)
+  const [currentView, setCurrentView] = useState<View>('import')
 
   const { headers, mapping, setMapping, parseBooks, isReady } = useCsvParser(file)
   const { books, importBooks } = useLibraryStore()
@@ -33,6 +35,7 @@ function App() {
     importBooks(parseBooks(), autoConvert)
     setMappingModalOpen(false)
     setFile(null)
+    setCurrentView('library')
   }
 
   const handleCancel = () => {
@@ -41,7 +44,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Suspense
         fallback={
@@ -50,23 +53,35 @@ function App() {
           </Box>
         }
       >
-        <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4 }}>
-          <Box sx={{ maxWidth: '37.5rem', mx: 'auto', mb: 4 }}>
-            <CsvDropZone onFileDrop={handleFileDrop} />
-          </Box>
-          {books.length > 0 && (
-            <>
-              <LibraryGrid />
-              <Box sx={{ mt: 4 }}>
-                <PromptSettingsPanel onGenerate={() => setShowOutput(true)} />
+        <BookmarkNav
+          currentView={currentView}
+          onNavigate={setCurrentView}
+          booksImported={books.length > 0}
+        />
+
+        <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4, pt: '3.5rem' }}>
+          <PageTransition pageKey={currentView}>
+            {currentView === 'import' && (
+              <Box sx={{ maxWidth: '37.5rem', mx: 'auto', mb: 4 }}>
+                <CsvDropZone onFileDrop={handleFileDrop} />
               </Box>
-              {showOutput && (
+            )}
+
+            {currentView === 'library' && (
+              <>
+                <LibraryGrid />
                 <Box sx={{ mt: 4 }}>
-                  <PromptOutputPanel onClose={() => setShowOutput(false)} />
+                  <PromptSettingsPanel onGenerate={() => setCurrentView('prompt')} />
                 </Box>
-              )}
-            </>
-          )}
+              </>
+            )}
+
+            {currentView === 'prompt' && books.length > 0 && (
+              <Box sx={{ mt: 4 }}>
+                <PromptOutputPanel onClose={() => setCurrentView('library')} />
+              </Box>
+            )}
+          </PageTransition>
         </Box>
 
         <ColumnMappingModal

@@ -1,3 +1,5 @@
+export { default as BookmarkNav } from './BookmarkNav'
+export type { View } from './BookmarkNav'
 export { default as InkBlot } from './InkBlot'
 export { default as ParchmentSurface } from './ParchmentSurface'
 export { default as CornerFlourish } from './CornerFlourish'
