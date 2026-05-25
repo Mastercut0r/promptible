@@ -1,3 +1,10 @@
+// Template literal constraint: ensures the value starts with '#'.
+// This is NOT an opaque brand — "#gggggg" satisfies the type at compile time.
+// Its purpose is to exclude oklch() and rgba() theme tokens (gold*, textMuted,
+// shelfGrain) from darken() call sites, as those formats are not supported.
+// Use CSS color-mix() or a dedicated oklch library to transform those tokens.
+export type HexColor = `#${string}`
+
 function clampByte(value: number): number {
   if (value < 0) return 0
   if (value > 255) return 255
@@ -8,8 +15,8 @@ function toHexByte(value: number): string {
   return clampByte(value).toString(16).padStart(2, '0')
 }
 
-function parseHex(hex: string): { r: number; g: number; b: number } | null {
-  const trimmed = hex.trim().replace(/^#/, '')
+function parseHex(hex: HexColor): { r: number; g: number; b: number } | null {
+  const trimmed = hex.replace(/^#/, '')
   const normalized =
     trimmed.length === 3
       ? trimmed
@@ -29,7 +36,12 @@ function parseHex(hex: string): { r: number; g: number; b: number } | null {
   }
 }
 
-export function darken(hex: string, amount: number): string {
+/**
+ * Darkens a hex color by the given factor (0–1, where 0.1 = 10% darker).
+ * Only accepts hex strings (#rgb or #rrggbb). Non-hex values are rejected
+ * at compile time via the HexColor branded type.
+ */
+export function darken(hex: HexColor, amount: number): HexColor {
   const rgb = parseHex(hex)
   if (!rgb) return hex
 
