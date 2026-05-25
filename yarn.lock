@@ -1601,6 +1601,7 @@ __metadata:
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
     "@vitejs/plugin-react": "npm:^6.0.1"
+    clsx: "npm:^2.1.1"
     i18next: "npm:^26.0.10"
     papaparse: "npm:^5.5.3"
     react: "npm:^19.2.6"

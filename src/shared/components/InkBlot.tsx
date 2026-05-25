@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { CSSProperties } from 'react'
 import styles from './InkBlot.module.scss'
 
@@ -11,19 +12,11 @@ interface InkBlotProps {
 }
 
 function InkBlot({ size = 40, x, y, opacity = 0.12, style, className }: InkBlotProps) {
-  const combined = className ? `${styles['ink-blot']} ${className}` : styles['ink-blot']
-
   return (
     <div
-      className={combined}
-      style={{
-        left: x,
-        top: y,
-        width: size,
-        height: size,
-        opacity,
-        ...style,
-      }}
+      aria-hidden="true"
+      className={clsx(styles.inkBlot, className)}
+      style={{ left: x, top: y, width: size, height: size, opacity, ...style }}
     />
   )
 }

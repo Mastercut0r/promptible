@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { CSSProperties, ReactNode } from 'react'
 import styles from './ParchmentSurface.module.scss'
 
@@ -8,12 +9,8 @@ interface ParchmentSurfaceProps {
 }
 
 function ParchmentSurface({ children, style, className }: ParchmentSurfaceProps) {
-  const combined = className
-    ? `${styles['parchment-surface']} ${className}`
-    : styles['parchment-surface']
-
   return (
-    <div className={combined} style={style}>
+    <div className={clsx(styles.parchmentSurface, className)} style={style}>
       {children}
     </div>
   )

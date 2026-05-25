@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { CSSProperties } from 'react'
 import styles from './OrnamentDivider.module.scss'
 
@@ -7,13 +8,11 @@ interface OrnamentDividerProps {
 }
 
 function OrnamentDivider({ style, className }: OrnamentDividerProps) {
-  const combined = className ? `${styles.divider} ${className}` : styles.divider
-
   return (
-    <div className={combined} style={style}>
-      <div className={styles['line-left']} />
+    <div aria-hidden="true" className={clsx(styles.divider, className)} style={style}>
+      <div className={styles.lineLeft} />
       <div className={styles.diamond} />
-      <div className={styles['line-right']} />
+      <div className={styles.lineRight} />
     </div>
   )
 }
