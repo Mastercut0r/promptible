@@ -1,0 +1,8 @@
+.parchmentSurface {
+  position: relative;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 20% 30%, var(--parchment-grain-soft) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 65%, var(--parchment-grain-medium) 0%, transparent 40%),
+    var(--parchment);
+}

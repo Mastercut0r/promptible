@@ -23,6 +23,10 @@ export interface ThemeTokens {
   shelfGrain: string
   coverColor: string
   coverAccent: string
+  // Overlay colors for the aged-paper texture in ParchmentSurface.
+  // Uses full rgba() so the hue adapts per theme (warm amber / cool blue / sage).
+  parchmentGrainSoft: string
+  parchmentGrainMedium: string
 }
 
 // ThemeDefinition separates the human-readable display name from the CSS tokens
@@ -51,6 +55,8 @@ export const THEMES: Record<ThemeName, ThemeDefinition> = {
       shelfGrain: 'rgba(90,55,30,0.15)',
       coverColor: '#4a2e1a',
       coverAccent: '#8b6e4e',
+      parchmentGrainSoft: 'rgba(180, 150, 100, 0.08)',
+      parchmentGrainMedium: 'rgba(180, 150, 100, 0.12)',
     },
   },
   midnight: {
@@ -71,6 +77,8 @@ export const THEMES: Record<ThemeName, ThemeDefinition> = {
       shelfGrain: 'rgba(60,60,100,0.15)',
       coverColor: '#1e2048',
       coverAccent: '#5a5e90',
+      parchmentGrainSoft: 'rgba(100, 110, 160, 0.08)',
+      parchmentGrainMedium: 'rgba(100, 110, 160, 0.12)',
     },
   },
   enchanted: {
@@ -91,6 +99,8 @@ export const THEMES: Record<ThemeName, ThemeDefinition> = {
       shelfGrain: 'rgba(50,80,50,0.15)',
       coverColor: '#1e3a20',
       coverAccent: '#5a8a50',
+      parchmentGrainSoft: 'rgba(100, 140, 100, 0.08)',
+      parchmentGrainMedium: 'rgba(100, 140, 100, 0.12)',
     },
   },
 }

@@ -1,0 +1,6 @@
+.inkBlot {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 45% 55% 60% 40% / 50% 40% 60% 50%;
+  background: radial-gradient(ellipse at 40% 40%, var(--ink), transparent 70%);
+}
