@@ -288,6 +288,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/caveat@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource/caveat@npm:5.2.8"
+  checksum: 10c0/dae0bb8d65ac04cc26c9c1c6def8061ed7ac3dcd9b8bc4be155457c1ce7419603d958ec76980f748531a47a67950141045bd7dc6e5089814946304a5b6e3d5a7
+  languageName: node
+  linkType: hard
+
+"@fontsource/crimson-pro@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource/crimson-pro@npm:5.2.8"
+  checksum: 10c0/3ffadbfd54f7f4ad01f5ecbe006bdd35520ed65557836cbb9fd8d4d42d642e570d953a9f4a38de3180ed25acfffefe445c1ca2a25c6cad51767f5fa224570809
+  languageName: node
+  linkType: hard
+
+"@fontsource/playfair-display@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource/playfair-display@npm:5.2.8"
+  checksum: 10c0/9802f1928bf01fb15428fa3f579bc06d05ab44a70d4e9ba372c58e856598a8766595816c0fdfd536888f6d9dcef13be1365335f40ffa17025f483eb1a7c656f3
+  languageName: node
+  linkType: hard
+
 "@isaacs/fs-minipass@npm:^4.0.0":
   version: 4.0.1
   resolution: "@isaacs/fs-minipass@npm:4.0.1"
@@ -1570,6 +1591,9 @@ __metadata:
   dependencies:
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.1"
+    "@fontsource/caveat": "npm:^5.2.8"
+    "@fontsource/crimson-pro": "npm:^5.2.8"
+    "@fontsource/playfair-display": "npm:^5.2.8"
     "@mui/icons-material": "npm:^9.0.1"
     "@mui/material": "npm:^9.0.1"
     "@mui/x-data-grid": "npm:^9.2.0"

@@ -1,4 +1,5 @@
 import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { camelToKebab } from '../utils/string'
 import { DEFAULT_THEME, isThemeName, THEMES, type ThemeName, type ThemeTokens } from './themes'
 
 const STORAGE_KEY = 'promptible.theme'
@@ -17,14 +18,9 @@ function readStoredTheme(): ThemeName {
   return isThemeName(stored) ? stored : DEFAULT_THEME
 }
 
-function camelToKebab(input: string): string {
-  return input.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`)
-}
-
 function applyTokensToRoot(tokens: ThemeTokens): void {
   const root = document.documentElement
   for (const key of Object.keys(tokens) as Array<keyof ThemeTokens>) {
-    if (key === 'name') continue
     root.style.setProperty(`--${camelToKebab(key)}`, tokens[key])
   }
 }
@@ -34,14 +30,21 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<ThemeName>(() => readStoredTheme())
+  const [theme, setThemeState] = useState<ThemeName>(() => {
+    const initial = readStoredTheme()
+    // Apply tokens synchronously before first render to prevent FOUC.
+    applyTokensToRoot(THEMES[initial].tokens)
+    return initial
+  })
 
-  const tokens = THEMES[theme]
+  const tokens = THEMES[theme].tokens
 
   useEffect(() => {
     applyTokensToRoot(tokens)
     window.localStorage.setItem(STORAGE_KEY, theme)
-  }, [theme, tokens])
+    // `tokens` is always THEMES[theme].tokens — it has no independent lifecycle.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme])
 
   const setTheme = useCallback((next: ThemeName) => {
     setThemeState(next)
@@ -54,4 +57,3 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
-
