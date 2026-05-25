@@ -1,0 +1,131 @@
+.page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+.lightCone {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 600px;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(200, 170, 100, 0.1) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.titleBlock {
+  text-align: center;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle {
+  font-family: var(--font-script);
+  font-size: 26px;
+  color: var(--gold);
+  opacity: 0.8;
+}
+
+.bookPerspective {
+  perspective: 1200px;
+  position: relative;
+  z-index: 2;
+}
+
+.book {
+  width: 580px;
+  height: 400px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.backCover {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 8px 8px 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.interior {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  border-radius: 2px 6px 6px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  pointer-events: none;
+
+  &.active {
+    pointer-events: auto;
+  }
+}
+
+.handwrittenNote {
+  font-family: var(--font-script);
+  font-size: 14px;
+  color: rgba(30, 24, 20, 0.35);
+  margin-top: 20px;
+  transform: rotate(-1.5deg);
+}
+
+.hint {
+  font-family: var(--font-script);
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-top: 32px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.genreIcons {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  opacity: 0.12;
+}
+
+.genreIcon {
+  font-size: 28px;
+  filter: grayscale(1);
+}
