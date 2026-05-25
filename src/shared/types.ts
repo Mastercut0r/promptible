@@ -1,5 +1,7 @@
 export type AppRating = 'DISLIKED' | 'NEUTRAL' | 'LOVED' | 'UNRATED'
 
+export type View = 'import' | 'library' | 'prompt'
+
 export type RatedAppRating = Exclude<AppRating, 'UNRATED'>
 
 export interface Book {

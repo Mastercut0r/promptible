@@ -18,3 +18,14 @@
   opacity: 0;
   transform: translateX(-2.5rem);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    transition: opacity 0.2s ease;
+  }
+
+  .hiddenRight,
+  .hiddenLeft {
+    transform: none;
+  }
+}
