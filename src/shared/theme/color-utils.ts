@@ -1,7 +1,8 @@
-// Branded type to make it explicit that darken() only accepts hex strings.
-// Theme tokens that use oklch() or rgba() (gold*, textMuted, shelfGrain) are
-// intentionally excluded — passing them would silently return the original value.
-// Use CSS color-mix() or a dedicated oklch library if you need to transform those.
+// Template literal constraint: ensures the value starts with '#'.
+// This is NOT an opaque brand — "#gggggg" satisfies the type at compile time.
+// Its purpose is to exclude oklch() and rgba() theme tokens (gold*, textMuted,
+// shelfGrain) from darken() call sites, as those formats are not supported.
+// Use CSS color-mix() or a dedicated oklch library to transform those tokens.
 export type HexColor = `#${string}`
 
 function clampByte(value: number): number {

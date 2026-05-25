@@ -1,9 +1,5 @@
-// Genre colors are intentionally theme-agnostic: each genre has a fixed
-// visual identity (e.g. Fantasy is always purple, Crime always deep red)
-// that should remain consistent regardless of the active color theme.
-// The values are taken 1:1 from the design handoff and are not expected
-// to vary per theme. If per-theme genre overrides become a design requirement,
-// move these into the ThemeDefinition.tokens structure.
+// Genre colors are fixed per genre regardless of active theme (design handoff decision).
+// If per-theme overrides are required, move these into ThemeDefinition.tokens.
 export interface GenreStyle {
   bg: string
   spine: string

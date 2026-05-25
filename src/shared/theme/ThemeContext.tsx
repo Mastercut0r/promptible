@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { camelToKebab } from '../utils/string'
 import { DEFAULT_THEME, isThemeName, THEMES, type ThemeName, type ThemeTokens } from './themes'
 
@@ -37,14 +37,20 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     return initial
   })
 
-  const tokens = THEMES[theme].tokens
+  // Skip the effect on initial mount — tokens were already applied synchronously
+  // above. Only re-apply (and persist) when the theme actually changes.
+  const didMount = useRef(false)
 
   useEffect(() => {
-    applyTokensToRoot(tokens)
+    if (!didMount.current) {
+      didMount.current = true
+      return
+    }
+    applyTokensToRoot(THEMES[theme].tokens)
     window.localStorage.setItem(STORAGE_KEY, theme)
-    // `tokens` is always THEMES[theme].tokens — it has no independent lifecycle.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme])
+
+  const tokens = THEMES[theme].tokens
 
   const setTheme = useCallback((next: ThemeName) => {
     setThemeState(next)

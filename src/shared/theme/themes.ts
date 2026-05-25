@@ -3,7 +3,7 @@
 // alpha-transparent surfaces use rgba(). Standardizing formats would
 // require design changes — do not convert without updating the handoff.
 
-const THEME_NAMES = ['antique', 'midnight', 'enchanted'] as const
+export const THEME_NAMES = ['antique', 'midnight', 'enchanted'] as const
 
 export type ThemeName = (typeof THEME_NAMES)[number]
 

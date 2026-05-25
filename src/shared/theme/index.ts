@@ -1,4 +1,4 @@
-export { THEMES, DEFAULT_THEME, isThemeName } from './themes'
+export { THEMES, THEME_NAMES, DEFAULT_THEME, isThemeName } from './themes'
 export type { ThemeName, ThemeTokens, ThemeDefinition } from './themes'
 export { ThemeProvider, ThemeContext } from './ThemeContext'
 export type { ThemeContextValue } from './ThemeContext'
