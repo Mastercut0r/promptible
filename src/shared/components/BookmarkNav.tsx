@@ -1,6 +1,5 @@
+import type { View } from '../types'
 import styles from './BookmarkNav.module.scss'
-
-export type View = 'import' | 'library' | 'prompt'
 
 interface Tab {
   view: View

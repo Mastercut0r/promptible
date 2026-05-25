@@ -16,7 +16,6 @@
   gap: 4px;
   cursor: pointer;
   border: none;
-  outline: none;
   background: var(--bg-warm);
   color: var(--text-light);
   font-family: 'Caveat', cursive;
@@ -27,8 +26,10 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
-  // V-shaped bottom cutout via clip-path
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+  &:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
 
   &:hover:not(.disabled) {
     transform: translateY(2px);

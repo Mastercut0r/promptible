@@ -9,7 +9,8 @@ import PromptSettingsPanel from './features/prompt-settings/components/PromptSet
 import PromptOutputPanel from './features/prompt-output/components/PromptOutputPanel'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
 import { useLibraryStore } from './store/useLibraryStore'
-import BookmarkNav, { type View } from './shared/components/BookmarkNav'
+import type { View } from './shared/types'
+import BookmarkNav from './shared/components/BookmarkNav'
 import PageTransition from './shared/components/PageTransition'
 
 function App() {
