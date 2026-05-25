@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { View } from '../types'
 import styles from './BookmarkNav.module.scss'
 
@@ -25,13 +26,7 @@ function BookmarkNav({ currentView, onNavigate, booksImported }: BookmarkNavProp
       {TABS.map(({ view, emoji, label }) => {
         const locked = view !== 'import' && !booksImported
         const active = currentView === view
-        const className = [
-          styles.tab,
-          active ? styles.active : '',
-          locked ? styles.disabled : '',
-        ]
-          .filter(Boolean)
-          .join(' ')
+        const className = clsx(styles.tab, { [styles.active]: active, [styles.disabled]: locked })
 
         return (
           <button

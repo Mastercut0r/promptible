@@ -13,11 +13,19 @@ import type { View } from './shared/types'
 import BookmarkNav from './shared/components/BookmarkNav'
 import PageTransition from './shared/components/PageTransition'
 
+const VIEW_ORDER: View[] = ['import', 'library', 'prompt']
+
 function App() {
   const [file, setFile] = useState<File | null>(null)
   const [mappingModalOpen, setMappingModalOpen] = useState(false)
   const [autoConvert, setAutoConvert] = useState(false)
   const [currentView, setCurrentView] = useState<View>('import')
+  const [transitionDirection, setTransitionDirection] = useState<'right' | 'left'>('right')
+
+  const navigateTo = (next: View) => {
+    setTransitionDirection(VIEW_ORDER.indexOf(next) >= VIEW_ORDER.indexOf(currentView) ? 'right' : 'left')
+    setCurrentView(next)
+  }
 
   const { headers, mapping, setMapping, parseBooks, isReady } = useCsvParser(file)
   const { books, importBooks } = useLibraryStore()
@@ -36,7 +44,7 @@ function App() {
     importBooks(parseBooks(), autoConvert)
     setMappingModalOpen(false)
     setFile(null)
-    setCurrentView('library')
+    navigateTo('library')
   }
 
   const handleCancel = () => {
@@ -56,12 +64,12 @@ function App() {
       >
         <BookmarkNav
           currentView={currentView}
-          onNavigate={setCurrentView}
+          onNavigate={navigateTo}
           booksImported={books.length > 0}
         />
 
         <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4, pt: '3.5rem' }}>
-          <PageTransition pageKey={currentView}>
+          <PageTransition pageKey={currentView} direction={transitionDirection}>
             {currentView === 'import' && (
               <Box sx={{ maxWidth: '37.5rem', mx: 'auto', mb: 4 }}>
                 <CsvDropZone onFileDrop={handleFileDrop} />
@@ -72,14 +80,14 @@ function App() {
               <>
                 <LibraryGrid />
                 <Box sx={{ mt: 4 }}>
-                  <PromptSettingsPanel onGenerate={() => setCurrentView('prompt')} />
+                  <PromptSettingsPanel onGenerate={() => navigateTo('prompt')} />
                 </Box>
               </>
             )}
 
-            {currentView === 'prompt' && books.length > 0 && (
+            {currentView === 'prompt' && (
               <Box sx={{ mt: 4 }}>
-                <PromptOutputPanel onClose={() => setCurrentView('library')} />
+                <PromptOutputPanel onClose={() => navigateTo('library')} />
               </Box>
             )}
           </PageTransition>
