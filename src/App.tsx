@@ -1,6 +1,6 @@
 import { Suspense, useState, useEffect } from 'react'
 import { ThemeProvider, CssBaseline, CircularProgress, Box } from '@mui/material'
-import theme from './shared/theme'
+import theme from './shared/mui-theme'
 import './i18n'
 import CsvDropZone from './features/upload/components/CsvDropZone'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
