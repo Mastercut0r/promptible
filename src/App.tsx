@@ -4,7 +4,7 @@ import muiTheme from './shared/mui-theme'
 import './i18n'
 import ImportPage from './features/import-page/components/ImportPage'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
-import LibraryGrid from './features/library/components/LibraryGrid'
+import LibraryPage from './features/library/components/LibraryPage'
 import PromptSettingsPanel from './features/prompt-settings/components/PromptSettingsPanel'
 import PromptOutputPanel from './features/prompt-output/components/PromptOutputPanel'
 import { useCsvParser } from './features/upload/hooks/useCsvParser'
@@ -81,7 +81,7 @@ function App() {
 
           {currentView === 'library' && (
             <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4, pt: '3.5rem' }}>
-              <LibraryGrid />
+              <LibraryPage />
               <Box sx={{ mt: 4 }}>
                 <PromptSettingsPanel onGenerate={() => navigateTo('prompt')} />
               </Box>

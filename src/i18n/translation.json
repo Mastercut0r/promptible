@@ -56,6 +56,38 @@
     "resyncNote": "~ erneut synchronisieren, um deine Sammlung zu aktualisieren ~",
     "csvNote": "~ .csv-Dateien aus dem Audible-Bibliotheksexport ~"
   },
+  "library": {
+    "title": "Deine Bibliothek",
+    "stats": "{{rated}} von {{total}} Büchern bewertet · {{unrated}} warten auf dein Urteil",
+    "readyToConjure": "✦ bereit zum Beschwören",
+    "genreAll": "Alle",
+    "dragHint": "Auf ein Regal ziehen, um zu bewerten…",
+    "shelf": {
+      "LOVED": "♥ Schätze",
+      "NEUTRAL": "~ Das mittlere Regal",
+      "DISLIKED": "× Am besten vergessen"
+    },
+    "shelfEmpty": "Leeres Regal — Bücher hierher ziehen",
+    "shelfDropHint": "Loslassen, um hier einzusortieren…",
+    "unsorted": {
+      "title": "Warten auf Urteil",
+      "subtitle": "— Hover zum Bewerten oder auf ein Regal ziehen"
+    },
+    "allJudged": "Alle Bücher wurden beurteilt ✦",
+    "annotation": {
+      "ready": "{{loved}} Schätze, bereit zum Orakeln…",
+      "notReady": "Mindestens 3 Bücher bewerten, um einen Prompt zu erzeugen"
+    },
+    "cover": {
+      "dragHint": "oder auf ein Regal ziehen",
+      "current": "aktuell"
+    },
+    "rating": {
+      "LOVED": "Geliebt",
+      "NEUTRAL": "War okay",
+      "DISLIKED": "Nichts für mich"
+    }
+  },
   "mapping": {
     "auto_convert": "Audible-Sternebewertungen automatisch konvertieren",
     "cancel": "Abbrechen",
