@@ -1,0 +1,189 @@
+.cover {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 8px 8px 4px;
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  transition:
+    transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1),
+    opacity 0.4s ease 0.5s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 8px 32px rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  z-index: 5;
+
+  &:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+  }
+
+  &.open {
+    transform: rotateY(-165deg);
+    box-shadow: -2px 4px 16px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    z-index: 0;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  border-radius: 4px 0 0 4px;
+}
+
+.ornamentFrame {
+  border-radius: 4px;
+  padding: 28px 36px;
+  text-align: center;
+  position: relative;
+}
+
+/* Mandala */
+.mandala {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 14px;
+  position: relative;
+}
+
+.mandalaOuterRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.mandalaInnerRing {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+}
+
+.mandalaDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.mandalaSquare {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+}
+
+.mandalaCenterEye {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0.4;
+  transform: translate(-50%, -50%);
+}
+
+.coverTitle {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.coverSubtitle {
+  font-family: var(--font-script);
+  font-size: 19px;
+  opacity: 0.7;
+}
+
+/* Bottom ornament */
+.bottomOrnament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  opacity: 0.35;
+}
+
+.ornamentDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.ornamentLine {
+  width: 20px;
+  height: 1px;
+}
+
+.ornamentDiamond {
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+}
+
+/* Celestial lines */
+.celestialLine {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  height: 1px;
+  opacity: 0.15;
+
+  &.top {
+    top: 18px;
+  }
+
+  &.bottom {
+    bottom: 18px;
+  }
+}
+
+/* Corner diamonds */
+.cornerStar {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  opacity: 0.2;
+
+  &.topLeft {
+    top: 22px;
+    left: 22px;
+  }
+
+  &.topRight {
+    top: 22px;
+    right: 22px;
+  }
+
+  &.bottomLeft {
+    bottom: 22px;
+    left: 22px;
+  }
+
+  &.bottomRight {
+    bottom: 22px;
+    right: 22px;
+  }
+}
+
+.cornerStarInner {
+  position: absolute;
+  inset: 0;
+  transform: rotate(45deg);
+}

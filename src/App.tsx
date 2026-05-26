@@ -2,7 +2,7 @@ import { Suspense, useState, useEffect } from 'react'
 import { ThemeProvider, CssBaseline, CircularProgress, Box } from '@mui/material'
 import muiTheme from './shared/mui-theme'
 import './i18n'
-import CsvDropZone from './features/upload/components/CsvDropZone'
+import ImportPage from './features/import-page/components/ImportPage'
 import ColumnMappingModal from './features/upload/components/ColumnMappingModal'
 import LibraryGrid from './features/library/components/LibraryGrid'
 import PromptSettingsPanel from './features/prompt-settings/components/PromptSettingsPanel'
@@ -17,6 +17,7 @@ const VIEW_ORDER: View[] = ['import', 'library', 'prompt']
 
 function App() {
   const [file, setFile] = useState<File | null>(null)
+  const [importResetKey, setImportResetKey] = useState(0)
   const [mappingModalOpen, setMappingModalOpen] = useState(false)
   const [autoConvert, setAutoConvert] = useState(false)
   const [currentView, setCurrentView] = useState<View>('import')
@@ -50,6 +51,7 @@ function App() {
   const handleCancel = () => {
     setFile(null)
     setMappingModalOpen(false)
+    setImportResetKey((k) => k + 1)
   }
 
   return (
@@ -68,30 +70,30 @@ function App() {
           booksImported={books.length > 0}
         />
 
-        <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4, pt: '3.5rem' }}>
-          <PageTransition pageKey={currentView} direction={transitionDirection}>
-            {currentView === 'import' && (
-              <Box sx={{ maxWidth: '37.5rem', mx: 'auto', mb: 4 }}>
-                <CsvDropZone onFileDrop={handleFileDrop} />
-              </Box>
-            )}
+        <PageTransition pageKey={currentView} direction={transitionDirection}>
+          {currentView === 'import' && (
+            <ImportPage
+              onFileDrop={handleFileDrop}
+              hasExistingBooks={books.length > 0}
+              resetKey={importResetKey}
+            />
+          )}
 
-            {currentView === 'library' && (
-              <>
-                <LibraryGrid />
-                <Box sx={{ mt: 4 }}>
-                  <PromptSettingsPanel onGenerate={() => navigateTo('prompt')} />
-                </Box>
-              </>
-            )}
-
-            {currentView === 'prompt' && (
+          {currentView === 'library' && (
+            <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4, pt: '3.5rem' }}>
+              <LibraryGrid />
               <Box sx={{ mt: 4 }}>
-                <PromptOutputPanel onClose={() => navigateTo('library')} />
+                <PromptSettingsPanel onGenerate={() => navigateTo('prompt')} />
               </Box>
-            )}
-          </PageTransition>
-        </Box>
+            </Box>
+          )}
+
+          {currentView === 'prompt' && (
+            <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4, pt: '3.5rem' }}>
+              <PromptOutputPanel onClose={() => navigateTo('library')} />
+            </Box>
+          )}
+        </PageTransition>
 
         <ColumnMappingModal
           open={mappingModalOpen}

@@ -4,8 +4,8 @@ import styles from './InkBlot.module.scss'
 
 interface InkBlotProps {
   size?: number
-  x: number
-  y: number
+  x: number | string
+  y: number | string
   opacity?: number
   style?: CSSProperties
   className?: string

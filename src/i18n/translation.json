@@ -43,6 +43,19 @@
     "copyError": "Kopieren fehlgeschlagen – bitte manuell kopieren.",
     "noBooks": "Keine bewerteten Bücher entsprechen deinen Filtern. Bewerte einige Bücher und versuche es erneut."
   },
+  "importPage": {
+    "title": "Promptible",
+    "subtitle": "Jede große Reise beginnt mit einer einzelnen Seite…",
+    "coverTitle": "PROMPTIBLE",
+    "coverSubtitle": "Ein Begleiter für Leser",
+    "dropTitle": "Lege deine Bibliotheks-Schriftrolle hier ab",
+    "dropSubtitle": "Audible CSV-Export hierher ziehen",
+    "dropSuccess": "✦ Deine Bibliothek wurde empfangen!",
+    "dropSuccessHint": "Die erste Seite wird umgeblättert…",
+    "openHint": "Klicke auf das Buch, um es zu öffnen…",
+    "resyncNote": "~ erneut synchronisieren, um deine Sammlung zu aktualisieren ~",
+    "csvNote": "~ .csv-Dateien aus dem Audible-Bibliotheksexport ~"
+  },
   "mapping": {
     "auto_convert": "Audible-Sternebewertungen automatisch konvertieren",
     "cancel": "Abbrechen",
