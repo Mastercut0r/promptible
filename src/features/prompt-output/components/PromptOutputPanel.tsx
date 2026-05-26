@@ -1,9 +1,16 @@
-import { useState } from 'react'
-import { Alert, Box, Button, IconButton, Snackbar, Stack, TextField, Typography } from '@mui/material'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import CloseIcon from '@mui/icons-material/Close'
+import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useCompiledPrompt } from '../hooks/useCompiledPrompt'
+import { useBookRevealSequence } from '../hooks/useBookRevealSequence'
+import { useTheme } from '../../../shared/theme/useTheme'
+import { darken, type HexColor } from '../../../shared/theme/color-utils'
+import ParchmentSurface from '../../../shared/components/ParchmentSurface'
+import CornerFlourish from '../../../shared/components/CornerFlourish'
+import WaxSealButton from './WaxSealButton'
+import GoldenParticles from './GoldenParticles'
+import styles from './PromptOutputPanel.module.scss'
+
+const TOTAL_PAGES = 4
 
 interface PromptOutputPanelProps {
   onClose: () => void
@@ -11,67 +18,93 @@ interface PromptOutputPanelProps {
 
 export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
   const { t } = useTranslation()
-  const { prompt, bookCount } = useCompiledPrompt()
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
-  const [copyError, setCopyError] = useState(false)
+  const { prompt, bookCount, genreNames } = useCompiledPrompt()
+  const { phase, currentPage } = useBookRevealSequence()
+  const { tokens } = useTheme()
 
   if (!prompt) {
-    return (
-      <Typography color="text.secondary" sx={{ mt: 2 }}>
-        {t('promptOutput.noBooks')}
-      </Typography>
-    )
+    return <p className={styles.noBooks}>{t('promptPage.noBooks')}</p>
   }
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(prompt)
-      setCopyError(false)
-      setSnackbarOpen(true)
-    } catch {
-      setCopyError(true)
-      setSnackbarOpen(true)
-    }
-  }
+  const coverGradient = `linear-gradient(135deg, ${tokens.coverColor}, ${darken(tokens.coverColor as HexColor, 0.25)})`
+  const spineGradient = `linear-gradient(90deg, ${darken(tokens.coverColor as HexColor, 0.3)}, ${tokens.coverColor})`
+  const revealed = phase === 'revealed'
 
   return (
-    <Box>
-      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-        <Typography variant="h6">
-          {t('promptOutput.title')}
-        </Typography>
-        <IconButton size="small" onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      </Stack>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        {t('promptOutput.subtitle', { count: bookCount })}
-      </Typography>
-      <TextField
-        multiline
-        fullWidth
-        minRows={8}
-        maxRows={20}
-        value={prompt}
-        slotProps={{ input: { readOnly: true } }}
-        sx={{ mb: 2 }}
-      />
-      <Button variant="outlined" startIcon={<ContentCopyIcon />} onClick={handleCopy}>
-        {t('promptOutput.copyButton')}
-      </Button>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <Alert
-          severity={copyError ? 'error' : 'success'}
-          variant="filled"
-          onClose={() => setSnackbarOpen(false)}
-        >
-          {copyError ? t('promptOutput.copyError') : t('promptOutput.copySuccess')}
-        </Alert>
-      </Snackbar>
-    </Box>
+    <div className={styles.promptPage}>
+      {/* Magical glow */}
+      <div className={clsx(styles.magicalGlow, revealed && styles.glowIntense)} />
+
+      {/* Golden particles */}
+      {revealed && <GoldenParticles />}
+
+      {/* Title block */}
+      <div className={styles.titleBlock}>
+        <h2 className={styles.title}>
+          {revealed ? t('promptPage.titleRevealed') : t('promptPage.titleWaiting')}
+        </h2>
+        <p className={styles.subtitle}>
+          {revealed
+            ? t('promptPage.subtitleRevealed', { count: bookCount, genres: genreNames.join(', ') })
+            : t('promptPage.subtitleWaiting')}
+        </p>
+      </div>
+
+      {/* Book */}
+      <div className={styles.bookPerspective}>
+        <div className={styles.bookInner}>
+          {/* Back cover */}
+          <div className={styles.backCover} style={{ background: coverGradient }} />
+
+          {/* Final spread — prompt on parchment */}
+          <ParchmentSurface
+            className={clsx(styles.promptSpread, revealed && styles.spreadVisible)}
+          >
+            <CornerFlourish corner="top-left" size={44} color={tokens.coverAccent} />
+            <CornerFlourish corner="top-right" size={44} color={tokens.coverAccent} />
+            <CornerFlourish corner="bottom-left" size={44} color={tokens.coverAccent} />
+            <CornerFlourish corner="bottom-right" size={44} color={tokens.coverAccent} />
+
+            <div className={styles.promptText}>{prompt}</div>
+
+            <div className={styles.sealContainer}>
+              <WaxSealButton textToCopy={prompt} />
+            </div>
+          </ParchmentSurface>
+
+          {/* Turning pages */}
+          {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
+            <div
+              key={i}
+              className={clsx(styles.turningPage, i < currentPage && styles.turned)}
+              style={{
+                top: 10 + i,
+                bottom: 10 + i,
+                transitionDelay: `${i * 0.08}s`,
+                zIndex: TOTAL_PAGES - i + 10,
+                '--page-z': `${(TOTAL_PAGES - i) * 0.5}px`,
+                background: `linear-gradient(90deg,
+                  rgba(180,160,120,0.3) 0%,
+                  ${tokens.parchment} 2%,
+                  ${tokens.parchmentDark} 98%,
+                  rgba(180,160,120,0.2) 100%)`,
+              } as React.CSSProperties}
+            >
+              <div className={styles.chapterDecoration}>
+                {t(`promptPage.chapterPage${i + 1}`)}
+              </div>
+            </div>
+          ))}
+
+          {/* Spine */}
+          <div className={styles.spine} style={{ background: spineGradient }} />
+        </div>
+      </div>
+
+      {/* Back button */}
+      <button className={styles.backButton} onClick={onClose} type="button">
+        {t('promptPage.backButton')}
+      </button>
+    </div>
   )
 }
