@@ -71,7 +71,11 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
         <CoverCard
           book={book}
           onRate={onRate}
-          onDragStart={onDragStart}
+          onDragStart={(bookId) => {
+            setIsDragging(true)
+            setHovered(false)
+            onDragStart(bookId)
+          }}
           onDragEnd={handleDragEnd}
         />
       )}

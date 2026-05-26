@@ -38,7 +38,7 @@ export default function GenreFilterBar({ activeGenre, onGenreChange }: GenreFilt
           >
             {genreStyle && (
               <span
-                className={clsx(styles.dot, isActive && styles.dotActive)}
+                className={styles.dot}
                 style={{
                   background: genreStyle.spine,
                   boxShadow: isActive ? `0 0 6px ${genreStyle.spine}88` : undefined,

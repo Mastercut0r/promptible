@@ -17,7 +17,7 @@
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);
@@ -37,6 +37,3 @@
   transition: box-shadow 0.2s;
 }
 
-.dotActive {
-  // glow is set via inline style
-}

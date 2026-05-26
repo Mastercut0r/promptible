@@ -80,7 +80,7 @@ export default function LibraryPage() {
 
       <div className={styles.annotation}>
         {stats.rated >= 3
-          ? t('library.annotation.ready', { loved: stats.loved })
+          ? t('library.annotation.ready', { loved: shelved.LOVED.length })
           : t('library.annotation.notReady')}
       </div>
     </div>

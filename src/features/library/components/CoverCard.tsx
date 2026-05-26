@@ -68,6 +68,8 @@ export default function CoverCard({ book, onRate, onDragStart, onDragEnd }: Cove
                   background: opt.color + '22',
                   borderColor: opt.color + '55',
                 } : undefined}
+                aria-pressed={isActive}
+                aria-label={t(`library.rating.${opt.rating}`)}
                 onClick={(e) => {
                   e.stopPropagation()
                   onRate(book.id, opt.rating)

@@ -49,7 +49,7 @@
 .author {
   font-family: var(--font-script);
   font-size: 1rem;
-  color: rgba(30, 24, 20, 0.5);
+  color: color-mix(in srgb, var(--ink) 50%, transparent);
   margin: 0;
 }
 
@@ -79,21 +79,20 @@
   font-size: 0.875rem;
   padding: 0.4375rem 0.625rem;
   border-radius: 0.375rem;
-  border: 1px solid rgba(120, 100, 70, 0.15);
+  border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
   background: transparent;
   color: var(--ink);
   cursor: pointer;
   text-align: left;
-  transition: all 0.15s;
+  transition: background 0.15s, border-color 0.15s;
 
   &:hover {
-    background: rgba(120, 100, 70, 0.08);
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
   }
 }
 
 .ratingButtonActive {
-  border-style: solid;
-  border-width: 1px;
+  // background and border-color set via inline style (dynamic per rating color)
 }
 
 .symbol {
@@ -106,14 +105,14 @@
 .currentLabel {
   margin-left: auto;
   font-size: 0.6875rem;
-  color: rgba(30, 24, 20, 0.3);
+  color: color-mix(in srgb, var(--ink) 30%, transparent);
   font-family: var(--font-script);
 }
 
 .dragHintText {
   font-family: var(--font-script);
   font-size: 0.8125rem;
-  color: rgba(30, 24, 20, 0.3);
+  color: color-mix(in srgb, var(--ink) 30%, transparent);
   text-align: center;
   margin: 0.25rem 0 0;
 }
