@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useCompiledPrompt } from '../hooks/useCompiledPrompt'
-import { useBookRevealSequence } from '../hooks/useBookRevealSequence'
+import { useBookRevealSequence, TOTAL_PAGES } from '../hooks/useBookRevealSequence'
 import { useTheme } from '../../../shared/theme/useTheme'
 import { darken, type HexColor } from '../../../shared/theme/color-utils'
 import ParchmentSurface from '../../../shared/components/ParchmentSurface'
@@ -9,8 +9,6 @@ import CornerFlourish from '../../../shared/components/CornerFlourish'
 import WaxSealButton from './WaxSealButton'
 import GoldenParticles from './GoldenParticles'
 import styles from './PromptOutputPanel.module.scss'
-
-const TOTAL_PAGES = 4
 
 interface PromptOutputPanelProps {
   onClose: () => void

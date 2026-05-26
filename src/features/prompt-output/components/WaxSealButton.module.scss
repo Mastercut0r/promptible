@@ -2,8 +2,8 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #8a3030, #6a2020);
-  border: 3px solid #aa4040;
+  background: linear-gradient(135deg, var(--cover-color), var(--cover-accent));
+  border: 3px solid var(--cover-accent);
   cursor: pointer;
   display: flex;
   flex-direction: column;

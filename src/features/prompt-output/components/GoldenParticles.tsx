@@ -39,14 +39,6 @@ function GoldenParticles() {
           }}
         />
       ))}
-      <style>{`
-        @keyframes promptPageParticleFloat {
-          0% { opacity: 0; transform: translateY(0) scale(0.5); }
-          20% { opacity: 0.6; }
-          80% { opacity: 0.4; }
-          100% { opacity: 0; transform: translateY(-70px) scale(1.3); }
-        }
-      `}</style>
     </div>
   )
 }
