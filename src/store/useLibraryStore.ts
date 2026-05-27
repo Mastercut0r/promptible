@@ -25,42 +25,41 @@ export const useLibraryStore = create<LibraryState>()(
       books: [],
       importBooks: (newBooks, autoConvert) => {
         set((state) => {
-          const merged = [...state.books]
-
-          for (const parsed of newBooks) {
-            const existingIdx = merged.findIndex((b) => {
-              if (parsed.asin) return b.id === parsed.asin
-              return b.title === parsed.title && b.author === parsed.authors
-            })
-
-            let incomingRating: AppRating = 'UNRATED'
-            if (autoConvert) {
-              const stars = parseInt(parsed.myRating, 10)
-              incomingRating = AUDIBLE_RATING_MAP[stars] ?? 'UNRATED'
-            }
-
-            if (existingIdx >= 0) {
-              const existing = merged[existingIdx]
-              merged[existingIdx] = {
-                ...existing,
-                title: parsed.title,
-                author: parsed.authors,
-                genre: parsed.parentCategory,
-                // Preserve existing user rating if already set
-                rating: existing.rating !== 'UNRATED' ? existing.rating : incomingRating,
-              }
-            } else {
-              merged.push({
-                id: parsed.asin || crypto.randomUUID(),
-                title: parsed.title,
-                author: parsed.authors,
-                genre: parsed.parentCategory,
-                rating: incomingRating,
-              })
+          const ratingsByAsin = new Map<string, AppRating>()
+          const ratingsByKey = new Map<string, AppRating>()
+          for (const book of state.books) {
+            if (book.rating !== 'UNRATED') {
+              ratingsByAsin.set(book.id, book.rating)
+              ratingsByKey.set(book.title + '\0' + book.author, book.rating)
             }
           }
 
-          return { books: merged }
+          const books = newBooks.map((parsed) => {
+            const id = parsed.asin || crypto.randomUUID()
+            const preserved =
+              (parsed.asin && ratingsByAsin.get(parsed.asin)) ||
+              ratingsByKey.get(parsed.title + '\0' + parsed.authors)
+
+            let rating: AppRating
+            if (preserved) {
+              rating = preserved
+            } else if (autoConvert) {
+              const stars = parseInt(parsed.myRating, 10)
+              rating = AUDIBLE_RATING_MAP[stars] ?? 'UNRATED'
+            } else {
+              rating = 'UNRATED'
+            }
+
+            return {
+              id,
+              title: parsed.title,
+              author: parsed.authors,
+              genre: parsed.parentCategory,
+              rating,
+            }
+          })
+
+          return { books }
         })
       },
       setRating: (bookId, rating) => {
