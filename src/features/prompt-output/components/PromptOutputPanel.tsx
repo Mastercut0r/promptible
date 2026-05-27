@@ -105,7 +105,7 @@ export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
               settingsTurned && styles.settingsPageTurned,
             )}
           >
-            {!settingsTurned && <PromptSettingsPage onReveal={startReveal} />}
+            <PromptSettingsPage onReveal={startReveal} />
           </ParchmentSurface>
 
           {/* Spine */}
