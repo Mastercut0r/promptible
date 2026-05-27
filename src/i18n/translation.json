@@ -88,6 +88,22 @@
       "DISLIKED": "Nichts für mich"
     }
   },
+  "promptPage": {
+    "titleWaiting": "Die Offenbarung",
+    "titleRevealed": "Dein Prompt erwartet dich",
+    "subtitleWaiting": "Dein nächstes Kapitel wird beschworen …",
+    "subtitleRevealed": "Geformt aus {{count}} geschätzten Geschichten — {{genres}}",
+    "chapterPage1": "Erstes Kapitel · in dem der Leser Muster in seinen Regalen entdeckt · und der Algorithmus zu erwachen beginnt",
+    "chapterPage2": "Zweites Kapitel · worin Vorlieben wie Sternbilder Gestalt annehmen · jeder Stern eine einst gehörte Geschichte",
+    "chapterPage3": "Drittes Kapitel · eine Kartografie des Geschmacks · die bekannten Länder geliebter Erzählungen vermessend",
+    "chapterPage4": "Viertes Kapitel · der Prompt nimmt Gestalt an · Worte versammeln sich wie Reisende an einer Wegkreuzung",
+    "copyLabel": "Kopieren",
+    "copySubLabel": "zur Feder",
+    "copiedLabel": "Kopiert",
+    "copiedSubLabel": "✓",
+    "backButton": "← zurück zur Bibliothek",
+    "noBooks": "Keine bewerteten Bücher entsprechen deinen Filtern. Bewerte einige Bücher und versuche es erneut."
+  },
   "mapping": {
     "auto_convert": "Audible-Sternebewertungen automatisch konvertieren",
     "cancel": "Abbrechen",
