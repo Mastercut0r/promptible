@@ -1,24 +1,14 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  Select,
-  MenuItem,
-  Stack,
-  Typography,
-  Box,
-  Divider,
-} from '@mui/material'
+import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
+import ParchmentSurface from '../../../shared/components/ParchmentSurface'
+import CornerFlourish from '../../../shared/components/CornerFlourish'
+import OrnamentDivider from '../../../shared/components/OrnamentDivider'
 import { type AppField, type ColumnMapping, APP_FIELDS } from '../types'
+import styles from './ColumnMappingModal.module.scss'
 
-const REQUIRED_MAPPING_FIELDS: AppField[] = ['title', 'authors'];
+const REQUIRED_MAPPING_FIELDS: AppField[] = ['title', 'authors']
 
 interface ColumnMappingModalProps {
   open: boolean
@@ -42,70 +32,179 @@ export default function ColumnMappingModal({
   onCancel,
 }: ColumnMappingModalProps) {
   const { t } = useTranslation()
+  const onCancelRef = useRef(onCancel)
+  const triggerRef = useRef<Element | null>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    onCancelRef.current = onCancel
+  })
 
   const handleChange = (field: AppField, value: string) => {
     onMappingChange({ ...mapping, [field]: value })
   }
 
-  const isMappingValid = REQUIRED_MAPPING_FIELDS.every((field) => mapping[field] && mapping[field].trim() !== '');
+  const isMappingValid = REQUIRED_MAPPING_FIELDS.every(
+    (field) => mapping[field] && mapping[field].trim() !== '',
+  )
 
-  return (
-    <Dialog open={open} maxWidth="sm" fullWidth onClose={onCancel}>
-      <DialogTitle>{t('mapping.title')}</DialogTitle>
-      <DialogContent>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          {t('mapping.subtitle')}
-        </Typography>
-        <Stack spacing={2}>
+  // Escape key, body scroll lock, focus management
+  useEffect(() => {
+    if (!open) return
+
+    // Save trigger element for focus restore
+    triggerRef.current = document.activeElement
+
+    // Lock body scroll
+    document.body.style.overflow = 'hidden'
+
+    // Focus first interactive element
+    requestAnimationFrame(() => {
+      const firstSelect = dialogRef.current?.querySelector('select')
+      firstSelect?.focus()
+    })
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onCancelRef.current()
+        return
+      }
+
+      // Focus trap: cycle Tab within the dialog
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'select, input, button, [tabindex]:not([tabindex="-1"])',
+        )
+        if (focusable.length === 0) return
+
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = ''
+      document.removeEventListener('keydown', handleKeyDown)
+      // Restore focus to trigger element
+      if (triggerRef.current instanceof HTMLElement) {
+        triggerRef.current.focus()
+      }
+    }
+  }, [open])
+
+  if (!open) return null
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) onCancel()
+  }
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mapping-dialog-title"
+      ref={dialogRef}
+      className={styles.backdrop}
+      onClick={handleBackdropClick}
+    >
+      <ParchmentSurface className={styles.modalInner}>
+        <CornerFlourish corner="top-left" size={40} color="var(--cover-accent)" />
+        <CornerFlourish corner="top-right" size={40} color="var(--cover-accent)" />
+        <CornerFlourish corner="bottom-left" size={40} color="var(--cover-accent)" />
+        <CornerFlourish corner="bottom-right" size={40} color="var(--cover-accent)" />
+
+        {/* Title */}
+        <h2 id="mapping-dialog-title" className={styles.title}>
+          {t('mapping.title')}
+        </h2>
+        <p className={styles.subtitle}>{t('mapping.subtitle')}</p>
+
+        {/* Field mapping rows */}
+        <div className={styles.fields}>
           {APP_FIELDS.map((field) => {
-            const isRequired = REQUIRED_MAPPING_FIELDS.includes(field);
-            const isMissing = isRequired && !mapping[field]; 
+            const isRequired = REQUIRED_MAPPING_FIELDS.includes(field)
+            const isMissing = isRequired && !mapping[field]
             return (
-            <Box key={field} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Typography sx={{ minWidth: 160, flexShrink: 0, color: isMissing ? 'error.main' : 'inherit' }}>
-                {t(`mapping.field_${field}`)} {isRequired ? '*' : ''}
-              </Typography>
-              <FormControl 
-                fullWidth size="small"
-                error={isMissing}>
-                <InputLabel>{t('mapping.placeholder')}</InputLabel>
-                <Select
+              <div key={field} className={styles.fieldRow}>
+                <span
+                  className={clsx(
+                    styles.fieldLabel,
+                    isMissing && styles.fieldLabelMissing,
+                  )}
+                >
+                  {t(`mapping.field_${field}`)}
+                  {isRequired ? ' *' : ''}
+                </span>
+                <select
+                  className={clsx(styles.select, isMissing && styles.selectError)}
                   value={mapping[field] ?? ''}
-                  label={t('mapping.placeholder')}
                   onChange={(e) => handleChange(field, e.target.value)}
                 >
-                  <MenuItem value="">
-                    <em>{t('mapping.not_mapped')}</em>
-                  </MenuItem>
+                  <option value="">— {t('mapping.not_mapped')} —</option>
                   {headers.map((header) => (
-                    <MenuItem key={header} value={header}>
+                    <option key={header} value={header}>
                       {header}
-                    </MenuItem>
+                    </option>
                   ))}
-                </Select>
-              </FormControl>
-            </Box>
-            );
-          }
-          )}
-        </Stack>
-        <Divider sx={{ my: 2 }} />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={autoConvert}
-              onChange={(e) => onAutoConvertChange(e.target.checked)}
-            />
-          }
-          label={t('mapping.auto_convert')}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onCancel}>{t('mapping.cancel')}</Button>
-        <Button variant="contained" disabled={!isMappingValid} onClick={onContinue}>
-          {t('mapping.continue')}
-        </Button>
-      </DialogActions>
-    </Dialog>
+                </select>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Divider */}
+        <div className={styles.dividerWrap}>
+          <OrnamentDivider />
+        </div>
+
+        {/* Auto-convert checkbox */}
+        <label className={styles.checkboxRow}>
+          <input
+            type="checkbox"
+            className={styles.checkboxHidden}
+            checked={autoConvert}
+            onChange={(e) => onAutoConvertChange(e.target.checked)}
+          />
+          <span
+            className={clsx(
+              styles.checkbox,
+              autoConvert && styles.checkboxChecked,
+            )}
+          />
+          <span className={styles.checkboxLabel}>
+            {t('mapping.auto_convert')}
+          </span>
+        </label>
+
+        {/* Actions */}
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className={styles.btnCancel}
+            onClick={onCancel}
+          >
+            {t('mapping.cancel')}
+          </button>
+          <button
+            type="button"
+            className={styles.btnContinue}
+            disabled={!isMappingValid}
+            onClick={onContinue}
+          >
+            {t('mapping.continue')}
+          </button>
+        </div>
+      </ParchmentSurface>
+    </div>,
+    document.body,
   )
 }

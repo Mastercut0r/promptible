@@ -1,0 +1,239 @@
+// Local error color — not a theme token yet, but isolated here for easy extraction later.
+$color-error: #a04040;
+
+// ── Backdrop & container ──
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 8, 6, 0.7);
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modalInner {
+  position: relative;
+  max-width: 520px;
+  width: 90vw;
+  padding: 32px 36px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalIn 0.3s ease both;
+}
+
+// ── Typography ──
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.subtitle {
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px;
+  color: var(--ink);
+  opacity: 0.6;
+  margin: 0 0 24px;
+}
+
+// ── Field rows ──
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fieldRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fieldLabel {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+.fieldLabelMissing {
+  color: $color-error;
+}
+
+// ── Custom select ──
+
+.select {
+  flex: 1;
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--parchment-dark);
+  border: 1px solid rgba(120, 100, 70, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  // Custom dropdown arrow
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+
+  &:focus {
+    border-color: var(--cover-accent);
+    outline: none;
+  }
+
+  &:hover {
+    border-color: rgba(120, 100, 70, 0.5);
+  }
+}
+
+.selectError {
+  border-color: $color-error;
+}
+
+// ── Divider spacing ──
+
+.dividerWrap {
+  margin: 20px 0;
+}
+
+// ── Custom checkbox ──
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(120, 100, 70, 0.4);
+  border-radius: 4px;
+  background: var(--parchment);
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.2s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--ink);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+}
+
+.checkboxChecked {
+  background: var(--gold);
+  border-color: var(--gold);
+
+  &::after {
+    opacity: 1;
+  }
+}
+
+.checkboxLabel {
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+// ── Buttons ──
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btnCancel {
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px;
+  color: var(--ink);
+  background: none;
+  border: 1px solid rgba(120, 100, 70, 0.3);
+  border-radius: 6px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(120, 100, 70, 0.08);
+  }
+}
+
+.btnContinue {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 600;
+  font-size: 15px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+// ── Reduced motion ──
+
+@media (prefers-reduced-motion: reduce) {
+  .modalInner {
+    animation: none;
+  }
+}
