@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 
 export type RevealPhase = 'waiting' | 'turning' | 'revealed'
 
-export const TOTAL_PAGES = 5
+const SETTINGS_PAGES = 1
+export const DECORATIVE_PAGES = 4
+export const TOTAL_PAGES = SETTINGS_PAGES + DECORATIVE_PAGES
 const PAGE_INTERVAL = 550
-
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export function useBookRevealSequence() {
   const [phase, setPhase] = useState<RevealPhase>('waiting')
@@ -13,7 +13,7 @@ export function useBookRevealSequence() {
 
   const startReveal = useCallback(() => {
     if (phase !== 'waiting') return
-    if (prefersReduced) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setPhase('revealed')
       setCurrentPage(TOTAL_PAGES)
       return

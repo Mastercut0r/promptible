@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useCompiledPrompt } from '../hooks/useCompiledPrompt'
-import { useBookRevealSequence, TOTAL_PAGES } from '../hooks/useBookRevealSequence'
+import { useBookRevealSequence, TOTAL_PAGES, DECORATIVE_PAGES } from '../hooks/useBookRevealSequence'
 import { useTheme } from '../../../shared/theme/useTheme'
 import { darken, type HexColor } from '../../../shared/theme/color-utils'
 import ParchmentSurface from '../../../shared/components/ParchmentSurface'
@@ -14,8 +14,6 @@ import styles from './PromptOutputPanel.module.scss'
 interface PromptOutputPanelProps {
   onClose: () => void
 }
-
-const DECORATIVE_PAGES = TOTAL_PAGES - 1
 
 export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
   const { t } = useTranslation()
@@ -105,7 +103,7 @@ export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
               settingsTurned && styles.settingsPageTurned,
             )}
           >
-            <PromptSettingsPage onReveal={startReveal} />
+            <PromptSettingsPage onReveal={startReveal} hasPrompt={!!prompt} />
           </ParchmentSurface>
 
           {/* Spine */}

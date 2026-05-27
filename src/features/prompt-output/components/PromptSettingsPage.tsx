@@ -9,9 +9,10 @@ import styles from './PromptSettingsPage.module.scss'
 
 interface PromptSettingsPageProps {
   onReveal: () => void
+  hasPrompt: boolean
 }
 
-export default function PromptSettingsPage({ onReveal }: PromptSettingsPageProps) {
+export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettingsPageProps) {
   const { t } = useTranslation()
   const allGenres = useUniqueGenres()
   const { promptLanguage, selectedGenres, setPromptLanguage, setSelectedGenres, pruneGenres } =
@@ -33,8 +34,7 @@ export default function PromptSettingsPage({ onReveal }: PromptSettingsPageProps
     if (allSelected) {
       setSelectedGenres(allGenres.filter((g) => g !== genre))
     } else if (activeSet.has(genre)) {
-      const next = activeGenres.filter((g) => g !== genre)
-      setSelectedGenres(next.length === 0 ? [] : next)
+      setSelectedGenres(activeGenres.filter((g) => g !== genre))
     } else {
       const next = [...activeGenres, genre]
       setSelectedGenres(next.length === allGenres.length ? null : next)
@@ -45,7 +45,7 @@ export default function PromptSettingsPage({ onReveal }: PromptSettingsPageProps
     setSelectedGenres(allSelected ? [] : null)
   }
 
-  const canReveal = activeGenres.length > 0
+  const canReveal = activeGenres.length > 0 && hasPrompt
 
   return (
     <div className={styles.page}>
@@ -74,7 +74,7 @@ export default function PromptSettingsPage({ onReveal }: PromptSettingsPageProps
         <div>
           <div className={styles.genreHeader}>
             <span className={styles.fieldLabel}>{t('settingsPage.genreLabel')}</span>
-            <button type="button" className={styles.toggleAll} onClick={toggleAll}>
+            <button type="button" className={styles.toggleAll} aria-pressed={allSelected} onClick={toggleAll}>
               {allSelected ? t('settingsPage.deselectAll') : t('settingsPage.selectAll')}
             </button>
           </div>
@@ -86,10 +86,12 @@ export default function PromptSettingsPage({ onReveal }: PromptSettingsPageProps
                 <button
                   key={genre}
                   type="button"
+                  aria-pressed={isActive}
                   className={clsx(styles.pill, isActive && styles.pillActive)}
                   style={
                     isActive
                       ? {
+                          // spine values are 6-digit hex (#rrggbb); alpha suffix appended directly
                           background: genreStyle.spine + '33',
                           borderColor: genreStyle.spine + '66',
                         }
