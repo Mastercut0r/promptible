@@ -26,19 +26,20 @@ export const useLibraryStore = create<LibraryState>()(
       importBooks: (newBooks, autoConvert) => {
         set((state) => {
           const ratingsByAsin = new Map<string, AppRating>()
-          const ratingsByKey = new Map<string, AppRating>()
+          const ratingsByTitleAuthor = new Map<string, AppRating>()
           for (const book of state.books) {
             if (book.rating !== 'UNRATED') {
               ratingsByAsin.set(book.id, book.rating)
-              ratingsByKey.set(book.title + '\0' + book.author, book.rating)
+              // '\0' can't appear in CSV text, preventing title+author collisions
+              ratingsByTitleAuthor.set(book.title + '\0' + book.author, book.rating)
             }
           }
 
           const books = newBooks.map((parsed) => {
             const id = parsed.asin || crypto.randomUUID()
             const preserved =
-              (parsed.asin && ratingsByAsin.get(parsed.asin)) ||
-              ratingsByKey.get(parsed.title + '\0' + parsed.authors)
+              (parsed.asin ? ratingsByAsin.get(parsed.asin) : undefined) ??
+              ratingsByTitleAuthor.get(parsed.title + '\0' + parsed.authors)
 
             let rating: AppRating
             if (preserved) {
