@@ -1,3 +1,6 @@
+// Local error color — not a theme token yet, but isolated here for easy extraction later.
+$color-error: #a04040;
+
 // ── Backdrop & container ──
 
 .backdrop {
@@ -8,10 +11,6 @@
   align-items: center;
   justify-content: center;
   background: rgba(10, 8, 6, 0.7);
-}
-
-.modal {
-  animation: modalIn 0.3s ease both;
 }
 
 @keyframes modalIn {
@@ -34,6 +33,7 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   max-height: 90vh;
   overflow-y: auto;
+  animation: modalIn 0.3s ease both;
 }
 
 // ── Typography ──
@@ -78,7 +78,7 @@
 }
 
 .fieldLabelMissing {
-  color: #a04040;
+  color: $color-error;
 }
 
 // ── Custom select ──
@@ -112,7 +112,7 @@
 }
 
 .selectError {
-  border-color: #a04040;
+  border-color: $color-error;
 }
 
 // ── Divider spacing ──
@@ -133,9 +133,12 @@
 
 .checkboxHidden {
   position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
   opacity: 0;
-  width: 0;
-  height: 0;
   pointer-events: none;
 }
 
@@ -230,7 +233,7 @@
 // ── Reduced motion ──
 
 @media (prefers-reduced-motion: reduce) {
-  .modal {
+  .modalInner {
     animation: none;
   }
 }
