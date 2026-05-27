@@ -88,6 +88,17 @@
       "DISLIKED": "Nichts für mich"
     }
   },
+  "settingsPage": {
+    "title": "Bevor wir beginnen …",
+    "subtitle": "Konfiguriere den Zauber, bevor er gewirkt wird",
+    "languageLabel": "Prompt-Sprache",
+    "languageEN": "Englisch (EN)",
+    "languageDE": "Deutsch (DE)",
+    "genreLabel": "Genre-Auswahl",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen",
+    "revealButton": "Meinen Prompt enthüllen"
+  },
   "promptPage": {
     "titleWaiting": "Die Offenbarung",
     "titleRevealed": "Dein Prompt erwartet dich",

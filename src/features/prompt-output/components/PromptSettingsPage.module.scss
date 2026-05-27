@@ -1,0 +1,194 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 44px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+// ── Header ──
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 6px;
+  text-align: center;
+}
+
+.subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--ink);
+  opacity: 0.5;
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+.divider {
+  margin: 12px 0 20px;
+  width: 100%;
+}
+
+// ── Form ──
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 480px;
+  flex: 1;
+  min-height: 0;
+}
+
+.fieldLabel {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0 0 8px;
+  display: block;
+}
+
+// ── Language select ──
+
+.languageSelect {
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--parchment);
+  border: 1px solid rgba(30, 24, 20, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+  max-width: 240px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231e1814' fill-opacity='0.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+
+  &:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+  }
+}
+
+// ── Genre pills ──
+
+.genreHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.toggleAll {
+  font-family: 'Crimson Pro', serif;
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.5;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Crimson Pro', serif;
+  font-size: 14px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  opacity: 0.45;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.pillActive {
+  opacity: 1;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: box-shadow 0.2s;
+}
+
+// ── Reveal button ──
+
+.revealButton {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--parchment);
+  background: linear-gradient(135deg, var(--cover-color), var(--cover-accent));
+  border: 2px solid var(--cover-accent);
+  border-radius: 24px;
+  padding: 12px 32px;
+  cursor: pointer;
+  margin-top: auto;
+  align-self: center;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  min-width: 220px;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(200, 168, 76, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+// ── Responsive ──
+
+@media (max-width: 600px) {
+  .page {
+    padding: 20px 24px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .pill {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+}

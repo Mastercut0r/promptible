@@ -8,25 +8,29 @@ import ParchmentSurface from '../../../shared/components/ParchmentSurface'
 import CornerFlourish from '../../../shared/components/CornerFlourish'
 import WaxSealButton from './WaxSealButton'
 import GoldenParticles from './GoldenParticles'
+import PromptSettingsPage from './PromptSettingsPage'
 import styles from './PromptOutputPanel.module.scss'
 
 interface PromptOutputPanelProps {
   onClose: () => void
 }
 
+const DECORATIVE_PAGES = TOTAL_PAGES - 1
+
 export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
   const { t } = useTranslation()
   const { prompt, bookCount, genreNames } = useCompiledPrompt()
-  const { phase, currentPage } = useBookRevealSequence()
+  const { phase, currentPage, startReveal } = useBookRevealSequence()
   const { tokens } = useTheme()
 
-  if (!prompt) {
+  if (!prompt && phase !== 'waiting') {
     return <p className={styles.noBooks}>{t('promptPage.noBooks')}</p>
   }
 
   const coverGradient = `linear-gradient(135deg, ${tokens.coverColor}, ${darken(tokens.coverColor as HexColor, 0.25)})`
   const spineGradient = `linear-gradient(90deg, ${darken(tokens.coverColor as HexColor, 0.3)}, ${tokens.coverColor})`
   const revealed = phase === 'revealed'
+  const settingsTurned = currentPage >= 1
 
   return (
     <div className={styles.promptPage}>
@@ -70,17 +74,17 @@ export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
             </div>
           </ParchmentSurface>
 
-          {/* Turning pages */}
-          {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
+          {/* Decorative turning pages */}
+          {Array.from({ length: DECORATIVE_PAGES }).map((_, i) => (
             <div
               key={i}
-              className={clsx(styles.turningPage, i < currentPage && styles.turned)}
+              className={clsx(styles.turningPage, currentPage >= i + 2 && styles.turned)}
               style={{
                 top: 10 + i,
                 bottom: 10 + i,
-                transitionDelay: `${i * 0.08}s`,
-                zIndex: TOTAL_PAGES - i + 10,
-                '--page-z': `${(TOTAL_PAGES - i) * 0.5}px`,
+                transitionDelay: `${(i + 1) * 0.08}s`,
+                zIndex: DECORATIVE_PAGES - i + 10,
+                '--page-z': `${(DECORATIVE_PAGES - i) * 0.5}px`,
                 background: `linear-gradient(90deg,
                   rgba(180,160,120,0.3) 0%,
                   ${tokens.parchment} 2%,
@@ -93,6 +97,16 @@ export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
               </div>
             </div>
           ))}
+
+          {/* Settings page — topmost page in the book */}
+          <ParchmentSurface
+            className={clsx(
+              styles.settingsPage,
+              settingsTurned && styles.settingsPageTurned,
+            )}
+          >
+            {!settingsTurned && <PromptSettingsPage onReveal={startReveal} />}
+          </ParchmentSurface>
 
           {/* Spine */}
           <div className={styles.spine} style={{ background: spineGradient }} />

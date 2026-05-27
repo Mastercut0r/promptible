@@ -143,6 +143,30 @@
   line-height: 2.2;
 }
 
+// ── Settings page (topmost turning page) ──
+
+.settingsPage {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 28px;
+  border-radius: 3px 10px 10px 3px;
+  transform-origin: left center;
+  transform: rotateY(0) translateZ(3px);
+  transition: transform 0.65s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  z-index: 20;
+  overflow: hidden;
+}
+
+.settingsPageTurned {
+  transform: rotateY(-170deg);
+  box-shadow: -1px 2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
 // ── Spine ──
 
 .spine {
@@ -187,6 +211,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .turningPage {
+    transition: none;
+  }
+
+  .settingsPage {
     transition: none;
   }
 
