@@ -18,19 +18,20 @@ function getAuthorInitial(author: string): string {
 
 const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd }: BookSpineProps) {
   const [hovered, setHovered] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
+  const [dragSource, setDragSource] = useState<'spine' | 'card' | null>(null)
+  const isDragging = dragSource !== null
   const genre = getGenreStyle(book.genre)
 
   const handleDragStart = (e: DragEvent) => {
     e.dataTransfer.setData('text/plain', book.id)
     e.dataTransfer.effectAllowed = 'move'
-    setIsDragging(true)
+    setDragSource('spine')
     setHovered(false)
     onDragStart(book.id)
   }
 
   const handleDragEnd = () => {
-    setIsDragging(false)
+    setDragSource(null)
     setHovered(false)
     onDragEnd()
   }
@@ -49,7 +50,7 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
             rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 10%,
             ${genre.spine} 16%, ${genre.spine} 84%,
             rgba(0,0,0,0.15) 90%, rgba(0,0,0,0.4) 100%)`,
-          opacity: isDragging ? 0.35 : 1,
+          opacity: isDragging ? 'var(--drag-opacity)' : 1,
           transform: hovered ? 'translateY(-18px) scale(1.03)' : undefined,
           boxShadow: hovered
             ? '2px 8px 24px rgba(0,0,0,0.7), inset 0 0 20px rgba(255,255,255,0.05)'
@@ -68,13 +69,13 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
         </span>
       </div>
 
-      {(hovered || isDragging) && (
+      {(hovered || dragSource === 'card') && (
         <CoverCard
           book={book}
-          isDragging={isDragging}
+          isDragging={dragSource === 'card'}
           onRate={onRate}
           onDragStart={(bookId) => {
-            setIsDragging(true)
+            setDragSource('card')
             onDragStart(bookId)
           }}
           onDragEnd={handleDragEnd}

@@ -33,7 +33,7 @@ export default function CoverCard({ book, isDragging, onRate, onDragStart, onDra
   return (
     <div
       className={styles.card}
-      style={{ opacity: isDragging ? 0.35 : 1 }}
+      style={{ opacity: isDragging ? 'var(--drag-opacity)' : 1 }}
       draggable
       onDragStart={handleDragStart}
       onDragEnd={onDragEnd}
