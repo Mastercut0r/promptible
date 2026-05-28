@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { ParchmentSurface, CornerFlourish, OrnamentDivider } from '../../../shared/components'
 import { getGenreStyle, withOpacity } from '../../../shared/theme'
+import { normalizeGenre } from '../../../shared/utils/genreUtils'
 import type { AppRating, Book } from '../../../shared/types'
 import styles from './CoverCard.module.scss'
 
@@ -22,7 +23,8 @@ const RATING_OPTIONS = [
 
 export default function CoverCard({ book, isDragging, onRate, onDragStart, onDragEnd }: CoverCardProps) {
   const { t } = useTranslation()
-  const genre = getGenreStyle(book.genre)
+  const genreName = normalizeGenre(book.genre)
+  const genre = getGenreStyle(genreName)
 
   const handleDragStart = (e: DragEvent) => {
     e.dataTransfer.setData('text/plain', book.id)
@@ -56,7 +58,7 @@ export default function CoverCard({ book, isDragging, onRate, onDragStart, onDra
               className={styles.genreDot}
               style={{ background: genre.spine }}
             />
-            {book.genre}
+            {genreName}
           </span>
         </div>
 
