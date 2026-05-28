@@ -54,7 +54,7 @@
 }
 
 .genreBadge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.375rem;
   font-family: var(--font-body);
