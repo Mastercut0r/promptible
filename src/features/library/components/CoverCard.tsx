@@ -38,7 +38,7 @@ export default function CoverCard({ book, isDragging, onRate, onDragStart, onDra
       onDragStart={handleDragStart}
       onDragEnd={onDragEnd}
     >
-      <ParchmentSurface className={styles.surface}>
+      <ParchmentSurface className={styles.surface} style={{ borderTop: `3px solid ${genre.spine}` }}>
         <CornerFlourish corner="top-left" size={24} />
         <CornerFlourish corner="top-right" size={24} />
 
@@ -48,10 +48,14 @@ export default function CoverCard({ book, isDragging, onRate, onDragStart, onDra
           <span
             className={styles.genreBadge}
             style={{
-              color: genre.bg,
-              background: genre.bg + '22',
+              color: genre.text,
+              background: genre.spine + '40',
             }}
           >
+            <span
+              className={styles.genreDot}
+              style={{ background: genre.spine }}
+            />
             {book.genre}
           </span>
         </div>
