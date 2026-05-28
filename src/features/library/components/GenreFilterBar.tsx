@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { useUniqueGenres } from '../../../store/useLibraryStore'
-import { getGenreStyle } from '../../../shared/theme'
+import { getGenreStyle, withOpacity } from '../../../shared/theme'
 import styles from './GenreFilterBar.module.scss'
 
 interface GenreFilterBarProps {
@@ -27,8 +27,8 @@ export default function GenreFilterBar({ activeGenre, onGenreChange }: GenreFilt
             type="button"
             className={clsx(styles.pill, isActive && styles.pillActive)}
             style={isActive && genreStyle ? {
-              background: genreStyle.spine + '33',
-              borderColor: genreStyle.spine + '66',
+              background: withOpacity(genreStyle.spine, 0.20),
+              borderColor: withOpacity(genreStyle.spine, 0.40),
               color: genreStyle.text,
             } : isActive ? {
               background: 'var(--bg-shelf)',
@@ -41,7 +41,7 @@ export default function GenreFilterBar({ activeGenre, onGenreChange }: GenreFilt
                 className={styles.dot}
                 style={{
                   background: genreStyle.spine,
-                  boxShadow: isActive ? `0 0 6px ${genreStyle.spine}88` : undefined,
+                  boxShadow: isActive ? `0 0 6px ${withOpacity(genreStyle.spine, 0.533)}` : undefined,
                 }}
               />
             )}

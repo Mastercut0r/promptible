@@ -1,9 +1,11 @@
+import type { HexColor } from './color-utils'
+
 // Genre colors are fixed per genre regardless of active theme (design handoff decision).
 // If per-theme overrides are required, move these into ThemeDefinition.tokens.
 export interface GenreStyle {
-  bg: string
-  spine: string
-  text: string
+  bg: HexColor
+  spine: HexColor
+  text: HexColor
 }
 
 export const GENRE_COLORS: Record<string, GenreStyle> = {

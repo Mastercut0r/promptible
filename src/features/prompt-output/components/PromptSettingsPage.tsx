@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import OrnamentDivider from '../../../shared/components/OrnamentDivider'
-import { getGenreStyle } from '../../../shared/theme'
+import { getGenreStyle, withOpacity } from '../../../shared/theme'
 import { usePromptSettingsStore, type PromptLanguage } from '../../../store/usePromptSettingsStore'
 import { useUniqueGenres } from '../../../store/useLibraryStore'
 import styles from './PromptSettingsPage.module.scss'
@@ -91,9 +91,8 @@ export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettin
                   style={
                     isActive
                       ? {
-                          // spine values are 6-digit hex (#rrggbb); alpha suffix appended directly
-                          background: genreStyle.spine + '33',
-                          borderColor: genreStyle.spine + '66',
+                          background: withOpacity(genreStyle.spine, 0.20),
+                          borderColor: withOpacity(genreStyle.spine, 0.40),
                         }
                       : undefined
                   }
@@ -103,7 +102,7 @@ export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettin
                     className={styles.dot}
                     style={{
                       background: genreStyle.spine,
-                      boxShadow: isActive ? `0 0 6px ${genreStyle.spine}88` : undefined,
+                      boxShadow: isActive ? `0 0 6px ${withOpacity(genreStyle.spine, 0.533)}` : undefined,
                     }}
                   />
                   {genre}
