@@ -2,7 +2,7 @@ import { type DragEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { ParchmentSurface, CornerFlourish, OrnamentDivider } from '../../../shared/components'
-import { getGenreStyle } from '../../../shared/theme'
+import { getGenreStyle, withOpacity } from '../../../shared/theme'
 import type { AppRating, Book } from '../../../shared/types'
 import styles from './CoverCard.module.scss'
 
@@ -49,7 +49,7 @@ export default function CoverCard({ book, isDragging, onRate, onDragStart, onDra
             className={styles.genreBadge}
             style={{
               color: genre.text,
-              background: genre.spine + '40',
+              background: withOpacity(genre.spine, 0.251),
             }}
           >
             <span
@@ -71,8 +71,8 @@ export default function CoverCard({ book, isDragging, onRate, onDragStart, onDra
                 type="button"
                 className={clsx(styles.ratingButton, isActive && styles.ratingButtonActive)}
                 style={isActive ? {
-                  background: opt.color + '22',
-                  borderColor: opt.color + '55',
+                  background: withOpacity(opt.color, 0.133),
+                  borderColor: withOpacity(opt.color, 0.333),
                 } : undefined}
                 aria-pressed={isActive}
                 aria-label={t(`library.rating.${opt.rating}`)}

@@ -36,6 +36,13 @@ function parseHex(hex: HexColor): { r: number; g: number; b: number } | null {
   }
 }
 
+/** Appends a 2-digit hex alpha suffix to a hex color string (#rgb or #rrggbb). */
+export function withOpacity(hex: HexColor, alpha: number): string {
+  const a = Math.max(0, Math.min(1, alpha))
+  const byte = Math.round(a * 255)
+  return hex + byte.toString(16).padStart(2, '0')
+}
+
 /**
  * Darkens a hex color by the given factor (0–1, where 0.1 = 10% darker).
  * Only accepts hex strings (#rgb or #rrggbb). Non-hex values are rejected

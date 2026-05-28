@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { CornerFlourish, OrnamentDivider } from '../../../shared/components'
 import { useTheme } from '../../../shared/theme'
-import { darken, type HexColor } from '../../../shared/theme/color-utils'
+import { darken, withOpacity, type HexColor } from '../../../shared/theme/color-utils'
 import styles from './BookCover.module.scss'
 
 interface BookCoverProps {
@@ -28,7 +28,7 @@ export default function BookCover({ isOpen, onOpen }: BookCoverProps) {
       className={clsx(styles.cover, isOpen && styles.open)}
       style={{
         background: `
-          linear-gradient(145deg, ${tokens.coverAccent}22 0%, transparent 30%),
+          linear-gradient(145deg, ${withOpacity(tokens.coverAccent as HexColor, 0.133)} 0%, transparent 30%),
           linear-gradient(135deg, ${coverColor} 0%, ${darken(coverColor, 0.15)} 100%)`,
       }}
       onClick={() => !isOpen && onOpen()}
