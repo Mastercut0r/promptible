@@ -8,6 +8,7 @@ import styles from './CoverCard.module.scss'
 
 interface CoverCardProps {
   book: Book
+  isDragging?: boolean
   onRate: (bookId: string, rating: AppRating) => void
   onDragStart: (bookId: string) => void
   onDragEnd: () => void
@@ -19,7 +20,7 @@ const RATING_OPTIONS = [
   { rating: 'DISLIKED' as const, symbol: '×', color: '#7a5a5a' },
 ] as const
 
-export default function CoverCard({ book, onRate, onDragStart, onDragEnd }: CoverCardProps) {
+export default function CoverCard({ book, isDragging, onRate, onDragStart, onDragEnd }: CoverCardProps) {
   const { t } = useTranslation()
   const genre = getGenreStyle(book.genre)
 
@@ -32,6 +33,7 @@ export default function CoverCard({ book, onRate, onDragStart, onDragEnd }: Cove
   return (
     <div
       className={styles.card}
+      style={{ opacity: isDragging ? 0.35 : 1 }}
       draggable
       onDragStart={handleDragStart}
       onDragEnd={onDragEnd}

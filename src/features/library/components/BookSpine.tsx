@@ -31,6 +31,7 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
 
   const handleDragEnd = () => {
     setIsDragging(false)
+    setHovered(false)
     onDragEnd()
   }
 
@@ -38,7 +39,7 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
     <div
       className={styles.wrapper}
       onMouseEnter={() => { if (!isDragging) setHovered(true) }}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => { if (!isDragging) setHovered(false) }}
       style={{ zIndex: hovered ? 50 : 1 }}
     >
       <div
@@ -67,13 +68,13 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
         </span>
       </div>
 
-      {hovered && !isDragging && (
+      {(hovered || isDragging) && (
         <CoverCard
           book={book}
+          isDragging={isDragging}
           onRate={onRate}
           onDragStart={(bookId) => {
             setIsDragging(true)
-            setHovered(false)
             onDragStart(bookId)
           }}
           onDragEnd={handleDragEnd}
