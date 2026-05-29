@@ -97,7 +97,9 @@
     "genreLabel": "Genre-Auswahl",
     "selectAll": "Alle auswählen",
     "deselectAll": "Alle abwählen",
-    "revealButton": "Meinen Prompt enthüllen"
+    "revealButton": "Meinen Prompt enthüllen",
+    "revealHintNoBooks": "Bewerte zuerst mindestens ein Buch in deiner Bibliothek.",
+    "revealHintNoGenre": "Wähle mindestens ein Genre aus."
   },
   "promptPage": {
     "titleWaiting": "Die Offenbarung",

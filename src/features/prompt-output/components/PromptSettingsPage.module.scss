@@ -161,19 +161,30 @@
   transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
   min-width: 220px;
 
-  &:hover:not(:disabled) {
+  &:hover:not(.revealButtonDisabled) {
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(200, 168, 76, 0.3);
   }
 
-  &:active:not(:disabled) {
+  &:active:not(.revealButtonDisabled) {
     transform: translateY(0);
   }
+}
 
-  &:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
+.revealButtonDisabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.revealHint {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.55;
+  text-align: center;
+  align-self: center;
+  margin: 10px 0 0;
+  max-width: 320px;
 }
 
 // ── Responsive ──

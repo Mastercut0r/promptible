@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
-import { CornerFlourish, InkBlot, ParchmentSurface } from '../../../shared/components'
+import { CornerFlourish, FloatingIllustrations, InkBlot, ParchmentSurface } from '../../../shared/components'
 import { useTheme } from '../../../shared/theme'
 import { darken, type HexColor } from '../../../shared/theme/color-utils'
 import BookCover from './BookCover'
@@ -55,6 +55,9 @@ export default function ImportPage({ onFileDrop, hasExistingBooks, resetKey }: I
 
   return (
     <div className={styles.page}>
+      {/* Floating genre illustrations (decorative background) */}
+      <FloatingIllustrations variant="import" />
+
       {/* Atmospheric light cone */}
       <div className={styles.lightCone} />
 
