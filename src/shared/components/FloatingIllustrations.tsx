@@ -302,12 +302,19 @@ function FloatingIllustrations({ variant = 'import' }: FloatingIllustrationsProp
           <div
             key={i}
             className={styles.scene}
-            style={{
-              left: `${pos.x}%`,
-              top: `${pos.y}%`,
-              // styles.sceneReveal resolves to the CSS-Modules-scoped keyframe name.
-              animation: `${styles.sceneReveal} ${duration}s ease-in-out ${delay}s infinite`,
-            }}
+            // The animation is driven by the .scene CSS class via these custom
+            // properties (not an inline `animation`), so the reduced-motion rule
+            // can override it without needing !important. styles.sceneReveal
+            // resolves to the CSS-Modules-scoped keyframe name.
+            style={
+              {
+                left: `${pos.x}%`,
+                top: `${pos.y}%`,
+                '--scene-keyframes': styles.sceneReveal,
+                '--scene-duration': `${duration}s`,
+                '--scene-delay': `${delay}s`,
+              } as CSSProperties
+            }
           >
             <SceneComp size={size} />
           </div>

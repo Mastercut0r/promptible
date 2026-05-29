@@ -50,7 +50,8 @@ export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettin
   const disabledHint = !canReveal
     ? activeGenres.length === 0
       ? t('settingsPage.revealHintNoGenre')
-      : t('settingsPage.revealHintNoBooks')
+      : // genres selected but no rated books in those genres → no prompt to reveal
+        t('settingsPage.revealHintNoBooks')
     : null
 
   return (
@@ -121,10 +122,12 @@ export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettin
         {/* Reveal button */}
         <button
           type="button"
-          className={styles.revealButton}
-          disabled={!canReveal}
+          className={clsx(styles.revealButton, !canReveal && styles.revealButtonDisabled)}
+          // Use aria-disabled (not the HTML disabled attr) so the button stays
+          // focusable and screen readers can reach its aria-describedby hint.
+          aria-disabled={!canReveal || undefined}
           aria-describedby={disabledHint ? 'reveal-hint' : undefined}
-          onClick={onReveal}
+          onClick={canReveal ? onReveal : undefined}
         >
           {t('settingsPage.revealButton')}
         </button>

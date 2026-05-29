@@ -1,5 +1,7 @@
 .scene {
   position: absolute;
+  // Driven by per-scene custom properties set inline (name/duration/delay).
+  animation: var(--scene-keyframes) var(--scene-duration) ease-in-out var(--scene-delay) infinite;
 }
 
 // ── Scene reveal animation ──
@@ -37,6 +39,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .scene {
-    animation: none !important;
+    animation: none;
   }
 }

@@ -161,19 +161,19 @@
   transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
   min-width: 220px;
 
-  &:hover:not(:disabled) {
+  &:hover:not(.revealButtonDisabled) {
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(200, 168, 76, 0.3);
   }
 
-  &:active:not(:disabled) {
+  &:active:not(.revealButtonDisabled) {
     transform: translateY(0);
   }
+}
 
-  &:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
+.revealButtonDisabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .revealHint {
