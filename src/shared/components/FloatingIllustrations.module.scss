@@ -1,0 +1,42 @@
+.scene {
+  position: absolute;
+}
+
+// ── Scene reveal animation ──
+// Fades in to max 0.12 opacity while scaling 1.5 → 0.75, then fades out.
+
+@keyframes sceneReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  6% {
+    opacity: 0.09;
+    transform: scale(1.35);
+  }
+  20% {
+    opacity: 0.12;
+    transform: scale(1.15);
+  }
+  35% {
+    opacity: 0.08;
+    transform: scale(0.95);
+  }
+  45% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+}
+
+// ── Reduced motion ──
+// Disable the looping animation; scenes stay invisible (keyframe starts at opacity 0).
+
+@media (prefers-reduced-motion: reduce) {
+  .scene {
+    animation: none !important;
+  }
+}
