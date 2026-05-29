@@ -176,6 +176,17 @@
   }
 }
 
+.revealHint {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.55;
+  text-align: center;
+  align-self: center;
+  margin: 10px 0 0;
+  max-width: 320px;
+}
+
 // ── Responsive ──
 
 @media (max-width: 600px) {

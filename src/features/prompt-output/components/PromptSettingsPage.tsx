@@ -46,6 +46,12 @@ export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettin
   }
 
   const canReveal = activeGenres.length > 0 && hasPrompt
+  // Explain why the reveal button is disabled (genre vs. unrated-books reason).
+  const disabledHint = !canReveal
+    ? activeGenres.length === 0
+      ? t('settingsPage.revealHintNoGenre')
+      : t('settingsPage.revealHintNoBooks')
+    : null
 
   return (
     <div className={styles.page}>
@@ -117,10 +123,17 @@ export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettin
           type="button"
           className={styles.revealButton}
           disabled={!canReveal}
+          aria-describedby={disabledHint ? 'reveal-hint' : undefined}
           onClick={onReveal}
         >
           {t('settingsPage.revealButton')}
         </button>
+
+        {disabledHint && (
+          <p id="reveal-hint" className={styles.revealHint} role="note">
+            {disabledHint}
+          </p>
+        )}
       </div>
     </div>
   )
