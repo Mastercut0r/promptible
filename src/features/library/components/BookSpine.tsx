@@ -17,6 +17,13 @@ function getAuthorInitial(author: string): string {
   return last ? last.charAt(0) + '.' : ''
 }
 
+const MAX_SPINE_CHARS = 32
+function truncateTitle(title: string): string {
+  return title.length > MAX_SPINE_CHARS
+    ? title.slice(0, MAX_SPINE_CHARS).replace(/[\s:,–—-]+$/, '') + '…'
+    : title
+}
+
 const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd }: BookSpineProps) {
   const [hovered, setHovered] = useState(false)
   const [dragSource, setDragSource] = useState<'spine' | 'card' | null>(null)
@@ -63,7 +70,7 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
       >
         <div className={styles.gildedEdge} />
         <span className={styles.title} style={{ color: genre.text }}>
-          {book.title}
+          {truncateTitle(book.title)}
         </span>
         <span className={styles.authorInitial}>
           {getAuthorInitial(book.author)}
