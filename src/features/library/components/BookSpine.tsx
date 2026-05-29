@@ -1,6 +1,7 @@
 import { memo, useState, type DragEvent } from 'react'
 import { getGenreStyle } from '../../../shared/theme'
 import { normalizeGenre } from '../../../shared/utils/genreUtils'
+import { truncateTitle } from '../../../shared/utils/string'
 import type { AppRating, Book } from '../../../shared/types'
 import CoverCard from './CoverCard'
 import styles from './BookSpine.module.scss'
@@ -15,13 +16,6 @@ interface BookSpineProps {
 function getAuthorInitial(author: string): string {
   const last = author.split(' ').pop()
   return last ? last.charAt(0) + '.' : ''
-}
-
-const MAX_SPINE_CHARS = 32
-function truncateTitle(title: string): string {
-  return title.length > MAX_SPINE_CHARS
-    ? title.slice(0, MAX_SPINE_CHARS).replace(/[\s:,–—-]+$/, '') + '…'
-    : title
 }
 
 const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd }: BookSpineProps) {
