@@ -1,6 +1,7 @@
 import { memo, useState, type DragEvent } from 'react'
 import { getGenreStyle } from '../../../shared/theme'
 import { normalizeGenre } from '../../../shared/utils/genreUtils'
+import { truncateTitle } from '../../../shared/utils/string'
 import type { AppRating, Book } from '../../../shared/types'
 import CoverCard from './CoverCard'
 import styles from './BookSpine.module.scss'
@@ -63,7 +64,7 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
       >
         <div className={styles.gildedEdge} />
         <span className={styles.title} style={{ color: genre.text }}>
-          {book.title}
+          {truncateTitle(book.title)}
         </span>
         <span className={styles.authorInitial}>
           {getAuthorInitial(book.author)}

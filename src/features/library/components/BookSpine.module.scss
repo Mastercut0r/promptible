@@ -4,15 +4,15 @@
 }
 
 .spine {
-  width: 3.25rem;
-  height: 16.25rem;
+  width: 3.75rem;
+  height: 17.5rem;
   border-radius: 2px 4px 4px 2px;
   cursor: grab;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.125rem 0.3125rem;
+  padding: 1.25rem 0.375rem;
   position: relative;
   transition:
     transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -33,21 +33,20 @@
   writing-mode: vertical-rl;
   text-orientation: mixed;
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-height: calc(16.25rem - 3.4375rem);
-  letter-spacing: 0.5px;
-  line-height: 1.25;
+  max-height: calc(17.5rem - 3.625rem);
+  letter-spacing: 0.3px;
 }
 
 .authorInitial {
   position: absolute;
-  bottom: 0.625rem;
+  bottom: 0.6875rem;
   font-family: var(--font-script);
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
   writing-mode: vertical-rl;
 }
