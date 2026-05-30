@@ -1,44 +1,64 @@
-.scene {
+// One illustration slot per side, anchored a fixed distance from the page
+// centre so the scenes flank the centred book (580px wide) at any viewport
+// width instead of drifting to the screen edges on wide displays.
+.slot {
   position: absolute;
-  // Driven by per-scene custom properties set inline (name/duration/delay).
-  animation: var(--scene-keyframes) var(--scene-duration) ease-in-out var(--scene-delay) infinite;
+  top: 50%;
+  width: 320px;
+  transform: translateY(-50%);
 }
 
-// ── Scene reveal animation ──
-// Fades in to max 0.12 opacity while scaling 1.5 → 0.75, then fades out.
+.left {
+  // Right edge sits just left of the book, with a small breathing gap.
+  right: calc(50% + 300px);
+}
 
-@keyframes sceneReveal {
+.right {
+  // Left edge sits just right of the book.
+  left: calc(50% + 300px);
+}
+
+// The .webp assets are already white line-art on a real transparent background,
+// so they read as light lines on the dark themes — no CSS filter needed.
+.scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: center center;
+  // One-shot per mount: a fresh element (new React key) replays it from the
+  // start. Duration must be shorter than the time the element stays mounted
+  // (2 × STEP_MS in the component) so it fully fades out before being replaced.
+  animation: sceneCycle 8s ease-in-out forwards;
+}
+
+// ── Scene cycle animation ──
+// Fades in to a low peak opacity, then grows while fading back out — so each
+// scene gently appears, expands, and dissolves before the next one takes its
+// place on that side.
+@keyframes sceneCycle {
   0% {
     opacity: 0;
-    transform: scale(1.5);
+    transform: scale(0.82);
   }
-  6% {
-    opacity: 0.09;
-    transform: scale(1.35);
+  18% {
+    opacity: 0.13;
+    transform: scale(1);
   }
-  20% {
+  40% {
     opacity: 0.12;
-    transform: scale(1.15);
-  }
-  35% {
-    opacity: 0.08;
-    transform: scale(0.95);
-  }
-  45% {
-    opacity: 0;
-    transform: scale(0.75);
+    transform: scale(1.08);
   }
   100% {
     opacity: 0;
-    transform: scale(0.75);
+    transform: scale(1.5);
   }
 }
 
 // ── Reduced motion ──
-// Disable the looping animation; scenes stay invisible (keyframe starts at opacity 0).
-
+// No looping/scaling motion; show each scene at a steady low opacity instead.
 @media (prefers-reduced-motion: reduce) {
   .scene {
     animation: none;
+    opacity: 0.1;
   }
 }
