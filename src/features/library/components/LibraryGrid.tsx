@@ -31,7 +31,7 @@ export default function LibraryGrid() {
         minWidth: 120,
         // book.genre holds the raw, comma-joined Audible tag list; show the
         // canonical genre so the table matches the spines and filter bar.
-        valueGetter: (value: string) => normalizeGenre(value),
+        valueGetter: normalizeGenre,
       },
       {
         field: 'rating',

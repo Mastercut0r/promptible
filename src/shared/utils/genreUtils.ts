@@ -37,5 +37,7 @@ export function normalizeGenre(raw: string | null | undefined): string {
 
   const lower = trimmed.toLowerCase()
   const match = GENRE_ALIASES.find(([substring]) => lower.includes(substring))
-  return match ? match[1] : trimmed
+  // No alias match: bucket as "uncategorized" rather than surfacing the raw,
+  // comma-joined tag list, which would render as a verbose one-off filter chip.
+  return match ? match[1] : i18n.t('genre.uncategorized')
 }
