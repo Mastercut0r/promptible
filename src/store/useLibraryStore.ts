@@ -55,7 +55,7 @@ export const useLibraryStore = create<LibraryState>()(
               id,
               title: parsed.title,
               author: parsed.authors,
-              genre: parsed.parentCategory,
+              genre: parsed.genre,
               rating,
             }
           })
