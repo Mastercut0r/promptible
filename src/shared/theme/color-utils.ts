@@ -36,7 +36,10 @@ function parseHex(hex: HexColor): { r: number; g: number; b: number } | null {
   }
 }
 
-/** Appends a 2-digit hex alpha suffix to a hex color string (#rgb or #rrggbb). */
+/**
+ * Appends a 2-digit hex alpha suffix to a hex color string (#rgb or #rrggbb).
+ * For non-hex tokens (oklch, rgb), use {@link withAlpha} instead.
+ */
 export function withOpacity(hex: HexColor, alpha: number): string {
   const a = Math.max(0, Math.min(1, alpha))
   const byte = Math.round(a * 255)
@@ -45,11 +48,12 @@ export function withOpacity(hex: HexColor, alpha: number): string {
 
 /**
  * Applies opacity to any CSS color via color-mix(), including non-hex tokens
- * like oklch() (gold*) where the hex-alpha suffix from withOpacity() would
- * produce invalid CSS.
+ * like oklch() (gold*) where the hex-alpha suffix from {@link withOpacity}
+ * would produce invalid CSS. Sub-percent precision is preserved (color-mix
+ * accepts fractional percentages).
  */
 export function withAlpha(color: string, alpha: number): string {
-  const pct = Math.round(Math.max(0, Math.min(1, alpha)) * 100)
+  const pct = parseFloat((Math.max(0, Math.min(1, alpha)) * 100).toFixed(2))
   return `color-mix(in oklch, ${color} ${pct}%, transparent)`
 }
 
