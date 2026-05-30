@@ -46,7 +46,7 @@ export function useCsvParser(file: File | null): UseCsvParserResult {
       asin: mapping.asin && row[mapping.asin] ? row[mapping.asin] : '',
       title: mapping.title ? (row[mapping.title] ?? '') : '',
       authors: mapping.authors ? (row[mapping.authors] ?? '') : '',
-      parentCategory: mapping.parentCategory ? (row[mapping.parentCategory] ?? '') : '',
+      genre: mapping.genre ? (row[mapping.genre] ?? '') : '',
       myRating: mapping.myRating ? (row[mapping.myRating] ?? '') : '',
     }))
 

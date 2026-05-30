@@ -14,6 +14,7 @@ export const GENRE_COLORS = {
   Crime: { bg: '#5a2828', spine: '#8a3838', text: '#f0d0d0' },
   Romance: { bg: '#6a3050', spine: '#9a4878', text: '#f0d0e0' },
   Adventure: { bg: '#2a4a30', spine: '#3a7040', text: '#c8e8d0' },
+  Horror: { bg: '#1f3838', spine: '#356866', text: '#c8e8e6' },
 } satisfies Record<string, GenreStyle>
 
 // Canonical genre keys, derived from GENRE_COLORS so alias maps can't drift.
