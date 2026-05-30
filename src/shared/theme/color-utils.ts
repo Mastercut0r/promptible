@@ -44,6 +44,16 @@ export function withOpacity(hex: HexColor, alpha: number): string {
 }
 
 /**
+ * Applies opacity to any CSS color via color-mix(), including non-hex tokens
+ * like oklch() (gold*) where the hex-alpha suffix from withOpacity() would
+ * produce invalid CSS.
+ */
+export function withAlpha(color: string, alpha: number): string {
+  const pct = Math.round(Math.max(0, Math.min(1, alpha)) * 100)
+  return `color-mix(in oklch, ${color} ${pct}%, transparent)`
+}
+
+/**
  * Darkens a hex color by the given factor (0–1, where 0.1 = 10% darker).
  * Only accepts hex strings (#rgb or #rrggbb). Non-hex values are rejected
  * at compile time via the HexColor branded type.

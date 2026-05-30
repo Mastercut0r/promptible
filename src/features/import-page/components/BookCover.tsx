@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { CornerFlourish, OrnamentDivider } from '../../../shared/components'
 import { useTheme } from '../../../shared/theme'
-import { darken, withOpacity, type HexColor } from '../../../shared/theme/color-utils'
+import { darken, withAlpha, withOpacity, type HexColor } from '../../../shared/theme/color-utils'
 import styles from './BookCover.module.scss'
 
 interface BookCoverProps {
@@ -34,7 +34,7 @@ export default function BookCover({ isOpen, onOpen }: BookCoverProps) {
       onClick={() => !isOpen && onOpen()}
     >
       {/* Ornament frame */}
-      <div className={styles.ornamentFrame} style={{ border: `1px solid ${gold}44` }}>
+      <div className={styles.ornamentFrame} style={{ border: `1px solid ${withAlpha(gold, 0.27)}` }}>
         <CornerFlourish corner="top-left" size={30} />
         <CornerFlourish corner="top-right" size={30} />
         <CornerFlourish corner="bottom-left" size={30} />
@@ -42,8 +42,8 @@ export default function BookCover({ isOpen, onOpen }: BookCoverProps) {
 
         {/* Mandala */}
         <div className={styles.mandala}>
-          <div className={styles.mandalaOuterRing} style={{ border: `1.5px solid ${gold}55` }} />
-          <div className={styles.mandalaInnerRing} style={{ border: `1px solid ${gold}33` }} />
+          <div className={styles.mandalaOuterRing} style={{ border: `1.5px solid ${withAlpha(gold, 0.33)}` }} />
+          <div className={styles.mandalaInnerRing} style={{ border: `1px solid ${withAlpha(gold, 0.2)}` }} />
           {CARDINAL_DEGREES.map((deg) => (
             <div
               key={deg}
@@ -58,14 +58,14 @@ export default function BookCover({ isOpen, onOpen }: BookCoverProps) {
             className={styles.mandalaSquare}
             style={{
               transform: 'translate(-50%,-50%) rotate(45deg)',
-              border: `1px solid ${gold}44`,
+              border: `1px solid ${withAlpha(gold, 0.27)}`,
             }}
           />
           <div
             className={styles.mandalaSquare}
             style={{
               transform: 'translate(-50%,-50%)',
-              border: `1px solid ${gold}44`,
+              border: `1px solid ${withAlpha(gold, 0.27)}`,
             }}
           />
           <div className={styles.mandalaCenterEye} style={{ background: gold }} />
