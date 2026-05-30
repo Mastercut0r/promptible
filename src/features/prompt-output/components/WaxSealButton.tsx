@@ -10,7 +10,7 @@ interface WaxSealButtonProps {
 function WaxSealButton({ textToCopy }: WaxSealButtonProps) {
   const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setTimeout>>()
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     return () => clearTimeout(timerRef.current)

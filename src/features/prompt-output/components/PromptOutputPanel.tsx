@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useCompiledPrompt } from '../hooks/useCompiledPrompt'
-import { useBookRevealSequence, TOTAL_PAGES, DECORATIVE_PAGES } from '../hooks/useBookRevealSequence'
+import { useBookRevealSequence, DECORATIVE_PAGES } from '../hooks/useBookRevealSequence'
 import { useTheme } from '../../../shared/theme/useTheme'
 import { darken, type HexColor } from '../../../shared/theme/color-utils'
 import ParchmentSurface from '../../../shared/components/ParchmentSurface'
