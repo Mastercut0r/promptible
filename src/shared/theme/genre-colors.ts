@@ -15,15 +15,18 @@ export const GENRE_COLORS = {
   Romance: { bg: '#6a3050', spine: '#9a4878', text: '#f0d0e0' },
   Adventure: { bg: '#2a4a30', spine: '#3a7040', text: '#c8e8d0' },
   Horror: { bg: '#1f3838', spine: '#356866', text: '#c8e8e6' },
+  Sachbuch: { bg: '#4a3d1a', spine: '#a8842f', text: '#f2e6c2' },
 } satisfies Record<string, GenreStyle>
 
 // Canonical genre keys, derived from GENRE_COLORS so alias maps can't drift.
 export type GenreKey = keyof typeof GENRE_COLORS
 
+// Neutral cool grey so "uncategorized" reads as deliberately genre-less and stays
+// visible against the warm dark-brown shelf background (a warm brown washed out).
 export const FALLBACK_GENRE_STYLE: GenreStyle = {
-  bg: '#4a3a28',
-  spine: '#6a5a40',
-  text: '#e8dcc8',
+  bg: '#34343a',
+  spine: '#6a6a74',
+  text: '#dcdce4',
 }
 
 export function getGenreStyle(genre: string): GenreStyle {

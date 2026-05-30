@@ -22,6 +22,13 @@ const GENRE_ALIASES: ReadonlyArray<readonly [substring: string, canonical: Genre
   ['abenteuer', 'Adventure'],
   ['adventure', 'Adventure'],
   ['horror', 'Horror'],
+  // Non-fiction tags collapse into one "Sachbuch" bucket instead of each raw tag
+  // list becoming its own chip. Placed last so fiction (matched above by
+  // "science fiction"/"fantasy") wins even when its tags also include
+  // "Naturwissenschaften" (which contains "wissenschaft").
+  ['wissenschaft', 'Sachbuch'],
+  ['politik', 'Sachbuch'],
+  ['sachbuch', 'Sachbuch'],
 ]
 
 export function normalizeGenre(raw: string | null | undefined): string {
