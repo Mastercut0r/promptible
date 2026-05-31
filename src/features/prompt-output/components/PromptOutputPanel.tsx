@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useCompiledPrompt } from '../hooks/useCompiledPrompt'
+import { genreLabel } from '../../../shared/utils/genreUtils'
 import { useBookRevealSequence, DECORATIVE_PAGES } from '../hooks/useBookRevealSequence'
 import { useTheme } from '../../../shared/theme/useTheme'
 import { darken, type HexColor } from '../../../shared/theme/color-utils'
@@ -49,7 +50,7 @@ export default function PromptOutputPanel({ onClose }: PromptOutputPanelProps) {
         </h2>
         <p className={styles.subtitle}>
           {revealed
-            ? t('promptPage.subtitleRevealed', { count: bookCount, genres: genreNames.join(', ') })
+            ? t('promptPage.subtitleRevealed', { count: bookCount, genres: genreNames.map((g) => genreLabel(g, t)).join(', ') })
             : t('promptPage.subtitleWaiting')}
         </p>
       </div>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import OrnamentDivider from '../../../shared/components/OrnamentDivider'
 import { getGenreStyle, withOpacity } from '../../../shared/theme'
+import { genreLabel } from '../../../shared/utils/genreUtils'
 import { usePromptSettingsStore, type PromptLanguage } from '../../../store/usePromptSettingsStore'
 import { useUniqueGenres } from '../../../store/useLibraryStore'
 import styles from './PromptSettingsPage.module.scss'
@@ -112,7 +113,7 @@ export default function PromptSettingsPage({ onReveal, hasPrompt }: PromptSettin
                       boxShadow: isActive ? `0 0 6px ${withOpacity(genreStyle.spine, 0.533)}` : undefined,
                     }}
                   />
-                  {genre}
+                  {genreLabel(genre, t)}
                 </button>
               )
             })}

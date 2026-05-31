@@ -2,7 +2,6 @@ import { useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLibraryStore } from '../../../store/useLibraryStore'
 import { OrnamentDivider } from '../../../shared/components'
-import { normalizeGenre } from '../../../shared/utils/genreUtils'
 import type { AppRating, RatedAppRating } from '../../../shared/types'
 import LibraryHeader from './LibraryHeader'
 import GenreFilterBar from './GenreFilterBar'
@@ -23,7 +22,7 @@ export default function LibraryPage() {
 
   const filteredBooks = useMemo(() => {
     if (genreFilter === 'All') return books
-    return books.filter((b) => normalizeGenre(b.genre) === genreFilter)
+    return books.filter((b) => b.genre === genreFilter)
   }, [books, genreFilter])
 
   const shelved = useMemo(() => ({
