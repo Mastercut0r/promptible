@@ -16,7 +16,10 @@ export default function LibraryHeader({ totalBooks, ratedBooks }: LibraryHeaderP
       <p className={styles.stats}>
         {t('library.stats', { rated: ratedBooks, total: totalBooks, unrated })}
         {ratedBooks >= 3 && (
-          <span className={styles.readyBadge}> {t('library.readyToConjure')}</span>
+          <span className={styles.readyBadge}>
+            <span className={styles.sparkle}>✦</span>
+            {t('library.readyToConjure')}
+          </span>
         )}
       </p>
     </div>

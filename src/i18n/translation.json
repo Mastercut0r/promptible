@@ -59,7 +59,7 @@
   "library": {
     "title": "Deine Bibliothek",
     "stats": "{{rated}} von {{total}} Büchern bewertet · {{unrated}} warten auf dein Urteil",
-    "readyToConjure": "✦ bereit zum Beschwören",
+    "readyToConjure": "bereit zum Beschwören",
     "genreAll": "Alle",
     "dragHint": "Auf ein Regal ziehen, um zu bewerten…",
     "shelf": {
