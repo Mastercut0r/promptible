@@ -37,6 +37,10 @@ const GENRE_ALIASES: ReadonlyArray<readonly [substring: string, canonical: Genre
 // across locales — see #24.
 export const UNCATEGORIZED_GENRE = '__uncategorized__'
 
+/**
+ * @internal Write boundary only — call at import time and in persist migrations.
+ * Display code must read the already-canonical `Book.genre` and localize via `genreLabel`.
+ */
 export function normalizeGenre(raw: string | null | undefined): string {
   const trimmed = raw?.trim()
   if (!trimmed) return UNCATEGORIZED_GENRE

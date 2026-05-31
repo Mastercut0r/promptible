@@ -82,13 +82,13 @@ export const useLibraryStore = create<LibraryState>()(
       // canonical key returns it unchanged), so re-running is harmless.
       migrate: (persisted, version) => {
         const state = persisted as { books?: Book[] }
-        if (version < 1 && state.books) {
+        if (version < 1 && Array.isArray(state.books)) {
           return {
             ...state,
             books: state.books.map((b) => ({ ...b, genre: normalizeGenre(b.genre) })),
           } as LibraryState
         }
-        return persisted as LibraryState
+        return state as LibraryState
       },
     }
   )
