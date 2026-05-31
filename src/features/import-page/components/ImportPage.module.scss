@@ -58,7 +58,10 @@
 .book {
   // Scale with the smaller viewport dimension so the book grows on large
   // monitors yet never overflows a short window; aspect ratio (29:20) is fixed.
-  width: clamp(460px, 64vmin, 940px);
+  // max-width keeps it from exceeding the screen on narrow phones, where the
+  // clamp floor would otherwise be wider than the viewport.
+  width: clamp(320px, 64vmin, 940px);
+  max-width: 95vw;
   aspect-ratio: 29 / 20;
   position: relative;
   transform-style: preserve-3d;

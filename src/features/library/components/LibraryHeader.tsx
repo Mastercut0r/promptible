@@ -17,7 +17,7 @@ export default function LibraryHeader({ totalBooks, ratedBooks }: LibraryHeaderP
         {t('library.stats', { rated: ratedBooks, total: totalBooks, unrated })}
         {ratedBooks >= 3 && (
           <span className={styles.readyBadge}>
-            <span className={styles.sparkle}>✦</span>
+            <span className={styles.sparkle} aria-hidden="true">✦</span>
             {t('library.readyToConjure')}
           </span>
         )}

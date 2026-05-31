@@ -15,8 +15,9 @@
 }
 
 .iconCircle {
-  width: clamp(56px, 7vmin, 84px);
-  height: clamp(56px, 7vmin, 84px);
+  --icon-circle-size: clamp(56px, 7vmin, 84px);
+  width: var(--icon-circle-size);
+  height: var(--icon-circle-size);
   margin: 0 auto 12px;
   border: 2px solid color-mix(in srgb, var(--ink) 30%, transparent);
   border-radius: 50%;
