@@ -20,4 +20,16 @@
 .readyBadge {
   color: var(--gold);
   opacity: 0.7;
+  margin-left: 0.5rem;
+}
+
+// The ✦ glyph has no variant in the script font, so it falls back to an
+// upright sans glyph and looks misaligned next to the slanted text. Give it
+// its own font/alignment so it reads as a balanced separator.
+.sparkle {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.8em;
+  vertical-align: middle;
+  margin-right: 0.4rem;
 }

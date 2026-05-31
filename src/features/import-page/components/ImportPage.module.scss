@@ -27,14 +27,14 @@
 
 .titleBlock {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: clamp(28px, 4vmin, 64px);
   position: relative;
   z-index: 2;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: 52px;
+  font-size: clamp(36px, 5vmin, 72px);
   font-weight: 700;
   color: var(--text-light);
   letter-spacing: 1px;
@@ -44,7 +44,7 @@
 
 .subtitle {
   font-family: var(--font-script);
-  font-size: 26px;
+  font-size: clamp(18px, 2.6vmin, 36px);
   color: var(--gold);
   opacity: 0.8;
 }
@@ -56,8 +56,13 @@
 }
 
 .book {
-  width: 580px;
-  height: 400px;
+  // Scale with the smaller viewport dimension so the book grows on large
+  // monitors yet never overflows a short window; aspect ratio (29:20) is fixed.
+  // max-width keeps it from exceeding the screen on narrow phones, where the
+  // clamp floor would otherwise be wider than the viewport.
+  width: clamp(320px, 64vmin, 940px);
+  max-width: 95vw;
+  aspect-ratio: 29 / 20;
   position: relative;
   transform-style: preserve-3d;
 }
@@ -90,17 +95,17 @@
 
 .handwrittenNote {
   font-family: var(--font-script);
-  font-size: 14px;
+  font-size: clamp(14px, 1.7vmin, 22px);
   color: rgba(30, 24, 20, 0.35);
-  margin-top: 20px;
+  margin-top: clamp(16px, 2.4vmin, 32px);
   transform: rotate(-1.5deg);
 }
 
 .hint {
   font-family: var(--font-script);
-  font-size: 18px;
+  font-size: clamp(16px, 2vmin, 26px);
   color: var(--text-muted);
-  margin-top: 32px;
+  margin-top: clamp(20px, 3vmin, 40px);
   animation: pulse 2s ease-in-out infinite;
 }
 
