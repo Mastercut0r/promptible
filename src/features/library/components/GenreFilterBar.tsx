@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { useUniqueGenres } from '../../../store/useLibraryStore'
 import { getGenreStyle, withOpacity } from '../../../shared/theme'
+import { genreLabel } from '../../../shared/utils/genreUtils'
 import styles from './GenreFilterBar.module.scss'
 
 interface GenreFilterBarProps {
@@ -45,7 +46,7 @@ export default function GenreFilterBar({ activeGenre, onGenreChange }: GenreFilt
                 }}
               />
             )}
-            {isAll ? t('library.genreAll') : genre}
+            {isAll ? t('library.genreAll') : genreLabel(genre, t)}
           </button>
         )
       })}

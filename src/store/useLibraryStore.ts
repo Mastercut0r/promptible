@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import { useShallow } from 'zustand/shallow'
 import type { Book, AppRating } from '../shared/types'
 import type { ParsedBook } from '../features/upload/types'
-import { normalizeGenre } from '../shared/utils/genreUtils'
+import { normalizeGenre, UNCATEGORIZED_GENRE } from '../shared/utils/genreUtils'
 
 const AUDIBLE_RATING_MAP: Record<number, AppRating> = {
   1: 'DISLIKED',
@@ -54,8 +54,10 @@ export const useLibraryStore = create<LibraryState>()(
             return {
               id,
               title: parsed.title,
+              // Normalize once here so Book.genre holds the canonical genre key;
+              // display sites read it directly instead of re-running the alias loop.
+              genre: normalizeGenre(parsed.genre),
               author: parsed.authors,
-              genre: parsed.genre,
               rating,
             }
           })
@@ -71,15 +73,38 @@ export const useLibraryStore = create<LibraryState>()(
         }))
       },
     }),
-    { name: 'promptible-library' }
+    {
+      name: 'promptible-library',
+      version: 1,
+      // v0 persisted Book.genre as the raw, comma-joined Audible tag list; v1 stores
+      // the canonical genre key. Normalize existing entries on rehydrate so old
+      // libraries don't render raw tag blobs. Idempotent (normalizeGenre of a
+      // canonical key returns it unchanged), so re-running is harmless.
+      migrate: (persisted, version) => {
+        const state = persisted as { books?: Book[] }
+        if (version < 1 && Array.isArray(state.books)) {
+          return {
+            ...state,
+            books: state.books.map((b) => ({ ...b, genre: normalizeGenre(b.genre) })),
+          } as LibraryState
+        }
+        return state as LibraryState
+      },
+    }
   )
 )
 
 export function useUniqueGenres(): string[] {
   return useLibraryStore(
     useShallow((state) => {
-      const genres = state.books.map((b) => normalizeGenre(b.genre))
-      return [...new Set(genres)].sort((a, b) => a.localeCompare(b))
+      // Book.genre is already canonical (normalized at import); just dedupe + sort.
+      const genres = [...new Set(state.books.map((b) => b.genre))]
+      return genres.sort((a, b) => {
+        // Keep the catch-all "uncategorized" bucket last regardless of locale.
+        if (a === UNCATEGORIZED_GENRE) return 1
+        if (b === UNCATEGORIZED_GENRE) return -1
+        return a.localeCompare(b)
+      })
     })
   )
 }

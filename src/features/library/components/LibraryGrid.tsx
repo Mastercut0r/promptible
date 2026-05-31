@@ -3,7 +3,7 @@ import { DataGrid, type GridColDef, type GridSortModel, type GridRenderCellParam
 import { useTranslation } from 'react-i18next'
 import { useLibraryStore } from '../../../store/useLibraryStore'
 import type { AppRating, Book } from '../../../shared/types'
-import { normalizeGenre } from '../../../shared/utils/genreUtils'
+import { genreLabel, UNCATEGORIZED_GENRE } from '../../../shared/utils/genreUtils'
 import BookRating from './BookRating'
 import styles from './LibraryGrid.module.scss'
 
@@ -29,9 +29,9 @@ export default function LibraryGrid() {
         headerName: t('LibraryGrid.column.genre'),
         flex: 1,
         minWidth: 120,
-        // book.genre holds the raw, comma-joined Audible tag list; show the
-        // canonical genre so the table matches the spines and filter bar.
-        valueGetter: normalizeGenre,
+        // book.genre holds the canonical genre key; show its localized label so the
+        // table matches the spines and filter bar.
+        valueGetter: (value: string | null | undefined) => genreLabel(value ?? UNCATEGORIZED_GENRE, t),
       },
       {
         field: 'rating',

@@ -1,6 +1,5 @@
 import { memo, useState, type DragEvent } from 'react'
 import { getGenreStyle } from '../../../shared/theme'
-import { normalizeGenre } from '../../../shared/utils/genreUtils'
 import { truncateTitle } from '../../../shared/utils/string'
 import type { AppRating, Book } from '../../../shared/types'
 import CoverCard from './CoverCard'
@@ -22,7 +21,7 @@ const BookSpine = memo(function BookSpine({ book, onRate, onDragStart, onDragEnd
   const [hovered, setHovered] = useState(false)
   const [dragSource, setDragSource] = useState<'spine' | 'card' | null>(null)
   const isDragging = dragSource !== null
-  const genre = getGenreStyle(normalizeGenre(book.genre))
+  const genre = getGenreStyle(book.genre)
 
   const handleDragStart = (e: DragEvent) => {
     e.dataTransfer.setData('text/plain', book.id)

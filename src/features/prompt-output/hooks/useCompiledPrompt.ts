@@ -4,7 +4,6 @@ import { useLibraryStore } from '../../../store/useLibraryStore'
 import { usePromptSettingsStore } from '../../../store/usePromptSettingsStore'
 import { filterBooksForPrompt } from '../utils/filterBooksForPrompt'
 import { compilePrompt } from '../utils/compilePrompt'
-import { normalizeGenre } from '../../../shared/utils/genreUtils'
 
 interface CompiledPromptResult {
   prompt: string
@@ -20,7 +19,8 @@ export function useCompiledPrompt(): CompiledPromptResult {
 
   return useMemo(() => {
     const filtered = filterBooksForPrompt(books, selectedGenres)
-    const genreNames = [...new Set(filtered.map((b) => normalizeGenre(b.genre)))].sort()
+    // Canonical genre keys; the display layer (PromptOutputPanel) localizes them.
+    const genreNames = [...new Set(filtered.map((b) => b.genre))].sort()
     return {
       prompt: compilePrompt(filtered, promptLanguage),
       bookCount: filtered.length,
