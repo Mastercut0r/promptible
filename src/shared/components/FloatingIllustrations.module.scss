@@ -1,6 +1,14 @@
-// One illustration slot per side, anchored a fixed distance from the page
-// centre so the scenes flank the centred book (580px wide) at any viewport
-// width instead of drifting to the screen edges on wide displays.
+// One illustration slot per side, anchored to the centred book's edge so the
+// scenes flank it (in the gutter) at any viewport size instead of drifting to
+// the screen edges or hiding behind the book.
+//
+// Both host books (import + prompt) size identically:
+//   width: clamp(320px, 64vmin, 940px)
+// so their half-width from centre is clamp(160px, 32vmin, 470px). A fixed offset
+// can't work because the book scales with the viewport (e.g. ~345px half-width
+// at 1920×1080), so we mirror that same expression here and add a small gap.
+$book-half: clamp(160px, 32vmin, 470px);
+
 .slot {
   position: absolute;
   top: 50%;
@@ -10,12 +18,12 @@
 
 .left {
   // Right edge sits just left of the book, with a small breathing gap.
-  right: calc(50% + 300px);
+  right: calc(50% + #{$book-half} + 24px);
 }
 
 .right {
   // Left edge sits just right of the book.
-  left: calc(50% + 300px);
+  left: calc(50% + #{$book-half} + 24px);
 }
 
 // The .webp assets are already white line-art on a real transparent background,

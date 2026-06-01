@@ -84,10 +84,11 @@ function App() {
             </Box>
           )}
 
+          {/* Full-bleed like ImportPage so the decorative FloatingIllustrations
+              can flank the book in the full-width gutter instead of being
+              clipped by a constraining max-width wrapper. */}
           {currentView === 'prompt' && (
-            <Box sx={{ maxWidth: '72rem', mx: 'auto', mt: 4, px: 2, pb: 4, pt: '3.5rem' }}>
-              <PromptOutputPanel onClose={() => navigateTo('library')} />
-            </Box>
+            <PromptOutputPanel onClose={() => navigateTo('library')} />
           )}
         </PageTransition>
 
