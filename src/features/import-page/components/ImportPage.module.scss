@@ -107,6 +107,15 @@
   color: var(--text-muted);
   margin-top: clamp(20px, 3vmin, 40px);
   animation: pulse 2s ease-in-out infinite;
+  transition: opacity 0.4s ease;
+}
+
+// Hidden on open: stays in the flow to reserve its space so the book keeps its
+// vertical position; only fades out.
+.hintHidden {
+  opacity: 0;
+  animation: none;
+  pointer-events: none;
 }
 
 @keyframes pulse {

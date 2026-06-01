@@ -102,8 +102,11 @@ export default function ImportPage({ onFileDrop, hasExistingBooks, resetKey }: I
         </div>
       </div>
 
-      {/* Pulsing hint */}
-      {!bookOpen && <p className={styles.hint}>{t('importPage.openHint')}</p>}
+      {/* Pulsing hint — kept mounted to reserve its space so the book doesn't
+          shift when it fades out on open */}
+      <p className={clsx(styles.hint, bookOpen && styles.hintHidden)} aria-hidden={bookOpen}>
+        {t('importPage.openHint')}
+      </p>
 
       {/* Genre icons */}
       <div className={styles.genreIcons}>
