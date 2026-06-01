@@ -104,7 +104,7 @@ export default function ImportPage({ onFileDrop, hasExistingBooks, resetKey }: I
 
       {/* Pulsing hint — kept mounted to reserve its space so the book doesn't
           shift when it fades out on open */}
-      <p className={clsx(styles.hint, bookOpen && styles.hintHidden)} aria-hidden={bookOpen}>
+      <p className={clsx(styles.hint, bookOpen && styles.hintHidden)} aria-hidden={bookOpen || undefined}>
         {t('importPage.openHint')}
       </p>
 
