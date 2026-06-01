@@ -60,8 +60,12 @@
   perspective: 1600px;
   position: relative;
   z-index: 2;
-  width: 90%;
-  max-width: 920px;
+  // Size identically to the import page's book ("The Beginning") so the
+  // decorative FloatingIllustrations — whose slots are anchored to this exact
+  // expression's half-width — flank it in the gutter. max-width keeps it
+  // on-screen on narrow phones.
+  width: clamp(320px, 64vmin, 940px);
+  max-width: 95vw;
   aspect-ratio: 920 / 580;
 }
 
